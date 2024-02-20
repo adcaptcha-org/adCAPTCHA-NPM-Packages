@@ -1,1 +1,1 @@
-export { adCAPTCHA } from './adCAPTCHA';
+export { AdCAPTCHA } from './adCAPTCHA';
