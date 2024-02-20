@@ -32,5 +32,9 @@
     "react",
     "captcha",
     "security"
-  ]
+  ],
+  "homepage": "https://docs.adcaptcha.com",
+  "repository": {
+    "url": "https://github.com/adcaptcha-org/adCAPTCHA-NPM-Packages"
+  }
 }
