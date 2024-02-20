@@ -1,8 +1,10 @@
 {
-  "name": "adCAPTCHA/react",
+  "name": "@adCAPTCHA/react",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -24,5 +26,11 @@
   "peerDependencies": {
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0"
-  }
+  },
+  "keywords": [
+    "adCAPTCHA",
+    "react",
+    "captcha",
+    "security"
+  ]
 }
