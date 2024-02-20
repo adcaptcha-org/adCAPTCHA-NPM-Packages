@@ -1,0 +1,1 @@
+export { adCAPTCHA } from './adCAPTCHA';
