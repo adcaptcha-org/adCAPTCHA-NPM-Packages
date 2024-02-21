@@ -24,17 +24,19 @@ function loadScript(): Promise<void> {
     script.onload = function () {
       if (window.adcap) {
         window.adcap.init({ apiURL: 'https://api.adcaptcha.com' });
-        // window.adcap.setupTriggers({
-        //   onComplete: () => {
-        //     setCaptchaSuccessToken(window.adcap.successToken);
-        //   },
-        // });
+        window.adcap.setupTriggers({
+          onComplete: () => {
+            const token = CaptchaSuccessToken();
+          },
+        });
       }
     };
     script.onerror = reject;
     document.getElementsByTagName('head')[0].appendChild(script);
   });
 }
+
+export const CaptchaSuccessToken = () => window.adcap?.successToken;
 
 export const AdCAPTCHA: React.FC<MyComponentProps> = ({ placementID }) => {
 
