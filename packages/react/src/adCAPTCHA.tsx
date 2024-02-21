@@ -26,7 +26,7 @@ function loadScript(): Promise<void> {
         window.adcap.init({ apiURL: 'https://api.adcaptcha.com' });
         window.adcap.setupTriggers({
           onComplete: () => {
-            const token = CaptchaSuccessToken();
+            CaptchaSuccessToken();
           },
         });
       }
@@ -40,11 +40,13 @@ export const CaptchaSuccessToken = () => window.adcap?.successToken;
 
 export const AdCAPTCHA: React.FC<MyComponentProps> = ({ placementID }) => {
 
-  loadScript().then(() => {
-        console.log('Script loaded');
-      }).catch((error) => {
-        console.error('Error loading script', error);
-      });
+  useEffect(() => {
+    loadScript().then(() => {
+      console.log('Script loaded');
+    }).catch((error) => {
+      console.error('Error loading script', error);
+    });
+  }, []);
 
   return (
     <div data-adcaptcha={placementID} data-testid="adCaptcha" />
