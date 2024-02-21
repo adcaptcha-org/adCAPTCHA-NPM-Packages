@@ -4,7 +4,7 @@ interface MyComponentProps {
   placementID: string;
 }
 
-export function loadScript(): Promise<void> {
+function loadScript(): Promise<void> {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = "https://widget.adcaptcha.com/index.js";

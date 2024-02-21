@@ -8,12 +8,14 @@ jest.mock('../src/adCAPTCHA', () => ({
 }));
 
 describe('AdCAPTCHA', () => {
-  it('renders AdCAPTCHA with the provided placement ID and loads the script', async () => {
+  it('renders AdCAPTCHA with the provided placement ID', async () => {
     const placementID = 'test-placement-id';
     render(<AdCAPTCHA placementID={placementID} />);
 
     await waitFor(() => {
-        expect(screen.getByTestId('adCaptcha')).toBeDefined();
+      const adCaptchaElement = screen.getByTestId('adCaptcha');
+      expect(adCaptchaElement).toBeDefined();
+      expect(adCaptchaElement.getAttribute('data-adcaptcha')).toEqual(placementID);
     });
   });
 });
