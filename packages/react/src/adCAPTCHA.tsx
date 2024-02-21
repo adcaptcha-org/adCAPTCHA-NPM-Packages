@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
+declare global {
+  interface Window {
+    adcap: {
+      setupTriggers: (config: { onComplete: () => void }) => void;
+      init: (config: { apiURL: string }) => void;
+      successToken: string;
+    };
+  }
+}
+
 interface MyComponentProps {
   placementID: string;
 }
@@ -9,21 +19,30 @@ function loadScript(): Promise<void> {
     const script = document.createElement('script');
     script.src = "https://widget.adcaptcha.com/index.js";
     script.defer = true;
-    script.onload = () => resolve();
+    script.type = 'module';
+    script.async = true;
+    script.onload = function () {
+      if (window.adcap) {
+        window.adcap.init({ apiURL: 'https://api.adcaptcha.com' });
+        // window.adcap.setupTriggers({
+        //   onComplete: () => {
+        //     setCaptchaSuccessToken(window.adcap.successToken);
+        //   },
+        // });
+      }
+    };
     script.onerror = reject;
-    document.body.appendChild(script);
+    document.getElementsByTagName('head')[0].appendChild(script);
   });
 }
 
 export const AdCAPTCHA: React.FC<MyComponentProps> = ({ placementID }) => {
 
-  useEffect(() => {
-    loadScript().then(() => {
-      console.log('Script loaded');
-    }).catch((error) => {
-      console.error('Error loading script', error);
-    });
-  }, []);
+  loadScript().then(() => {
+        console.log('Script loaded');
+      }).catch((error) => {
+        console.error('Error loading script', error);
+      });
 
   return (
     <div data-adcaptcha={placementID} data-testid="adCaptcha" />
