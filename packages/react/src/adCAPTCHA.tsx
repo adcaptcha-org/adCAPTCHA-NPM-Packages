@@ -45,19 +45,13 @@ export const AdCAPTCHA = forwardRef<AdCAPTCHAHandles, AdCAPTCHAProps>((props, re
     getCaptchaSuccessToken: CaptchaSuccessToken,
   }));
 
-  // useEffect(() => {
-  //   loadScript().then(() => {
-  //     console.log('Script loaded');
-  //   }).catch((error) => {
-  //     console.error('Error loading script', error);
-  //   });
-  // }, []);
-
-  loadScript().then(() => {
-    console.log('Script loaded');
-  }).catch((error) => {
-    console.error('Error loading script', error);
-  });
+  useEffect(() => {
+    loadScript().then(() => {
+      console.log('Script loaded');
+    }).catch((error) => {
+      console.error('Error loading script', error);
+    });
+  }, []);
 
   return (
     <div data-adcaptcha={placementID} />
