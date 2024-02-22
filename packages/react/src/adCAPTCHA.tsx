@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useImperativeHandle, forwardRef } from 'react';
 
 declare global {
   interface Window {
@@ -10,7 +10,11 @@ declare global {
   }
 }
 
-interface MyComponentProps {
+export interface AdCAPTCHAHandles {
+  getCaptchaSuccessToken: typeof CaptchaSuccessToken;
+}
+
+interface AdCAPTCHAProps {
   placementID: string;
 }
 
@@ -24,12 +28,8 @@ function loadScript(): Promise<void> {
     script.onload = function () {
       if (window.adcap) {
         window.adcap.init({ apiURL: 'https://api.adcaptcha.com' });
-        window.adcap.setupTriggers({
-          onComplete: () => {
-            CaptchaSuccessToken();
-          },
-        });
       }
+      resolve();
     };
     script.onerror = reject;
     document.getElementsByTagName('head')[0].appendChild(script);
@@ -38,18 +38,30 @@ function loadScript(): Promise<void> {
 
 export const CaptchaSuccessToken = () => window.adcap?.successToken;
 
-export const AdCAPTCHA: React.FC<MyComponentProps> = ({ placementID }) => {
+export const AdCAPTCHA = forwardRef<AdCAPTCHAHandles, AdCAPTCHAProps>((props, ref) => {
+  const { placementID } = props;
 
-  useEffect(() => {
-    loadScript().then(() => {
-      console.log('Script loaded');
-    }).catch((error) => {
-      console.error('Error loading script', error);
-    });
-  }, []);
+  useImperativeHandle(ref, () => ({
+    getCaptchaSuccessToken: CaptchaSuccessToken,
+  }));
+
+  // useEffect(() => {
+  //   loadScript().then(() => {
+  //     console.log('Script loaded');
+  //   }).catch((error) => {
+  //     console.error('Error loading script', error);
+  //   });
+  // }, []);
+
+  loadScript().then(() => {
+    console.log('Script loaded');
+  }).catch((error) => {
+    console.error('Error loading script', error);
+  });
 
   return (
-    <div data-adcaptcha={placementID} data-testid="adCaptcha" />
+    <div data-adcaptcha={placementID} />
   );
-};
+});
 
+AdCAPTCHA.displayName = 'adCAPTCHA';
