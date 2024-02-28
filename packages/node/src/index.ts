@@ -1,1 +1,1 @@
-export { Verify } from './verify';
+export { verify } from './verify';
