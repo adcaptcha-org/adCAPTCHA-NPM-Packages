@@ -1,2 +1,1 @@
-export { AdCAPTCHA, AdCAPTCHAHandles } from './adCAPTCHA';
-export { CaptchaSuccessToken } from './adCAPTCHA';
+export { default as AdCAPTCHA, getSuccessToken } from './adCAPTCHA';

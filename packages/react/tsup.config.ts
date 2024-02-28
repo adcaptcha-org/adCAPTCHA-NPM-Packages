@@ -5,7 +5,7 @@ export default defineConfig({
     index: './src/index.ts'
   },
   external: ['react'],
-  format: ['esm', 'cjs'],
+  format: ['cjs'],
   dts: true,
   clean: true,
   skipNodeModulesBundle: true

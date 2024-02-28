@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
-import { AdCAPTCHA } from '../src/adCAPTCHA';
+import { default as AdCAPTCHA } from '../src/adCAPTCHA';
 
 jest.mock('../src/adCAPTCHA', () => ({
   ...jest.requireActual('../src/adCAPTCHA'),
