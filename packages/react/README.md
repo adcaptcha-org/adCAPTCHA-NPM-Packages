@@ -1,6 +1,6 @@
 # adCAPTCHA React
 
-This package provides a React component for adCAPTCHA.
+This package provides a React component for adCAPTCHA. The AdCAPTCHA component is used to add a captcha on your website, by adding the necessary script and html.
 
 ## Installation
 
@@ -9,6 +9,11 @@ npm install @adcaptcha/react
 ```
 
 ## Usage
+
+#### Placement ID
+A Placement ID is used to specify what media will be shown in a captcha. To create a Placement ID, visit [AdCAPTCHA dashboard](https://app.adcaptcha.com/login). 
+
+[Documentation](https://docs.adcaptcha.com/wordpress) to learn how to create a Placement ID.
 
 ```jsx
 import { AdCAPTCHA, getSuccessToken } from '@adcaptcha/react';
