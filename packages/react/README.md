@@ -14,9 +14,10 @@ npm install @adcaptcha/react
 import { AdCAPTCHA, getSuccessToken } from '@adcaptcha/react';
 
 function App() {
+  const [token, setToken] = useState(null);
 
   const handleComplete = () => {
-    console.log('APP: COMPLETE!', getSuccessToken());
+    setToken(getSuccessToken());
   };
 
   return (
