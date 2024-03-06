@@ -11,7 +11,13 @@ Moreover, the implementation of adCAPTCHA is designed with performance in mind. 
 ## Packages
 
 ### Captcha Integration
-- @adcaptcha/react
+- [@adcaptcha/react](/packages/react/README.md)
+```bash
+npm install @adcaptcha/react
+```
 
 ### Captcha Verification
-- @adcaptcha/node
+- - [@adcaptcha/node](/packages/node/README.md)
+```bash
+npm install @adcaptcha/node
+```
