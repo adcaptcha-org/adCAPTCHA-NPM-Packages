@@ -17,7 +17,7 @@ npm install @adcaptcha/react
 ```
 
 ### Captcha Verification
-- - [@adcaptcha/node](/packages/node/README.md)
+- [@adcaptcha/node](/packages/node/README.md)
 ```bash
 npm install @adcaptcha/node
 ```
