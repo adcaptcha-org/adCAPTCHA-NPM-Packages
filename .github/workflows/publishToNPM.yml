@@ -21,7 +21,7 @@ jobs:
       - name: Publish @adcaptcha/react to NPM
         run: |
           cd packages/react
-          npm publish
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies and build @adcaptcha/node
@@ -32,6 +32,6 @@ jobs:
       - name: Publish @adcaptcha/node to NPM
         run: |
           cd packages/node
-          npm publish
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
