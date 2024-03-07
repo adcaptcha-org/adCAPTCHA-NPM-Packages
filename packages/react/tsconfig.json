@@ -1,0 +1,17 @@
+{
+  "include": ["."],
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["dom", "es6"],
+    "target": "es2016",
+    "module": "es6",
+    "moduleResolution": "Bundler",
+    "declaration": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["dist", "node_modules"]
+}
