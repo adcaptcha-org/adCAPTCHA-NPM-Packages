@@ -19,7 +19,9 @@ jobs:
           npm ci
           npm run build
       - name: Publish @adcaptcha/react to NPM
-        run: npm publish
+        run: |
+          cd packages/react
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Install dependencies and build @adcaptcha/node
@@ -28,6 +30,8 @@ jobs:
           npm ci
           npm run build
       - name: Publish @adcaptcha/node to NPM
-        run: npm publish
+        run: |
+          cd packages/node
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
