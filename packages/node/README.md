@@ -22,7 +22,7 @@ The token is exposed when the captcha has successfully been solved. [Example](/p
 ```jsx
 import { verify } from '@adcaptcha/node';
 
-const apiKey = "secret_key";
+const apiKey = "secret_key"; // Do not store in your code, should be kept secret (e.g. environment variables).
 const token = "captcha_success_token";
 
 try {
