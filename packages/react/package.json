@@ -1,0 +1,50 @@
+{
+  "name": "@adcaptcha/react",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup ./src",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "author": "adCAPTCHA",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.2.57",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "keywords": [
+    "adCAPTCHA",
+    "react",
+    "captcha",
+    "security"
+  ],
+  "homepage": "https://docs.adcaptcha.com",
+  "repository": {
+    "url": "https://github.com/adcaptcha-org/adCAPTCHA-NPM-Packages"
+  }
+}
