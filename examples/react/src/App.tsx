@@ -3,9 +3,11 @@ import './App.css';
 import { AdCAPTCHA, getSuccessToken } from '@adcaptcha/react';
 import axios from 'axios';
 import Navbar from './components/navbar';
+import ResponseMessage from './components/responseMessage';
 
 function App() {
   const [token, setToken] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
 
   const handleComplete = () => {
     const successToken = getSuccessToken();
@@ -17,7 +19,7 @@ function App() {
       const response = await axios.post('http://localhost:3001/verifyToken', {
         token: token,
       });
-      console.log(response.data);
+      setResponseMessage(response.data.message);
     } catch (error) {
       console.error(error);
     }
@@ -28,7 +30,12 @@ function App() {
       <Navbar />
       <div className="App">
         <header className="App-header">
-          <div className="flex">
+          {responseMessage ? (
+            <ResponseMessage 
+              responseMessage={responseMessage}
+            />
+          ) : null}
+          <div className="flex mt-10">
             <AdCAPTCHA
               placementID={'PLC-01HSJWPRM0HMWRNJGWP604DR8Z'}
               onComplete={handleComplete}

@@ -10,8 +10,6 @@ app.use(express.json());
 app.post('/verifyToken', async (req, res) => {
   const apiKey = process.env.API_KEY;
   const token = req.body.token;
-  console.log('API Key:', apiKey);
-  console.log('Token:', token);
 
   try {
     const response = await verify(apiKey, token);
