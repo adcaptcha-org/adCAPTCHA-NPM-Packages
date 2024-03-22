@@ -3,7 +3,7 @@ import logo from '../assets/logo_gradient.png'
 function Navbar() {
 
   return (
-    <div>
+    <div className="sticky top-0 z-50">
       <div className="bg-white shadow">
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 justify-between">
@@ -19,7 +19,7 @@ function Navbar() {
               </div>
             </div>
           </div>
-    </div>
+        </div>
     </div>
   );
 }
