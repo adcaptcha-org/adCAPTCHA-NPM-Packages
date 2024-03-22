@@ -1,8 +1,10 @@
 const express = require('express');
 const { verify } = require('@adcaptcha/node');
+const cors = require('cors');
 const app = express();
 require('dotenv').config({ path: '.env.local' });
 
+app.use(cors());
 app.use(express.json());
 
 app.post('/verifyToken', async (req, res) => {
