@@ -2,6 +2,7 @@ declare global {
   interface Window {
     adcap: {
       setupTriggers: (config: { onComplete: () => void }) => void;
+      setKeywords: (keywords: string[]) => void;
       init: () => void;
       successToken: string;
     };

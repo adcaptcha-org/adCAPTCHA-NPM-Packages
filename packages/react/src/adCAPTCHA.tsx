@@ -5,6 +5,7 @@ interface AdCAPTCHAProps {
   placementID: string;
   onComplete?: () => void;
 }
+
 const AdCAPTCHA = (props: AdCAPTCHAProps) => {
   loadScript().then(() => {
     if (!props.onComplete) return;
@@ -17,6 +18,10 @@ const AdCAPTCHA = (props: AdCAPTCHAProps) => {
   return (
     <div data-adcaptcha={props.placementID} />
   );
+}
+
+export const setKeywords = (keywords: string[]) => {
+  window.adcap.setKeywords(keywords);
 }
 
 export const getSuccessToken = () => window.adcap.successToken;
