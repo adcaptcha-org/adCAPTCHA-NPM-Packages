@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 import { AdCAPTCHA, getSuccessToken } from '@adcaptcha/react';
 import axios from 'axios';
 import Navbar from './components/navbar';
@@ -28,8 +27,8 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className="App">
-        <header className="App-header">
+      <div className="text-center">
+        <header className="bg-gray-800 min-h-screen flex flex-col items-center justify-center text-white">
           {responseMessage ? (
             <ResponseMessage 
               responseMessage={responseMessage}
