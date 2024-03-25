@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { loadScript } from './util';
 
 interface AdCAPTCHAProps {
@@ -6,13 +6,22 @@ interface AdCAPTCHAProps {
   onComplete?: () => void;
 }
 const AdCAPTCHA = (props: AdCAPTCHAProps) => {
-  loadScript().then(() => {
-    if (!props.onComplete) return;
+  const onCompleteRef = useRef<(() => void) | undefined>();
+  onCompleteRef.current = props.onComplete;
 
-    window.adcap.setupTriggers({
-      onComplete: props.onComplete,
-    });
-  });
+  useEffect(() => {
+    async function setupTriggers() {
+      loadScript().then(() => {
+        if (!onCompleteRef.current) return;
+
+        window.adcap.setupTriggers({
+            onComplete: onCompleteRef.current,
+        });
+      });
+    }
+
+    setupTriggers();
+  }, []);
 
   return (
     <div data-adcaptcha={props.placementID} />
