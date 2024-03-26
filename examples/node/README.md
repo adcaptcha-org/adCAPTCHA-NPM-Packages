@@ -4,6 +4,6 @@
 
 In the project directory, you can run:
 
-### `node api.js`
-
-
+```bash
+npm start
+```
