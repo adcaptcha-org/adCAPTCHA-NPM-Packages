@@ -1,1 +1,1 @@
-export { default as AdCAPTCHA, getSuccessToken } from './adCAPTCHA';
+export { default as AdCAPTCHA, getSuccessToken, setKeywords } from './adCAPTCHA';
