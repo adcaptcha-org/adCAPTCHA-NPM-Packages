@@ -13,23 +13,41 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+      - name: Check @adcaptcha/react version
+        id: check-react
+        uses: EndBug/version-check@v2
+        with:
+          file: packages/react/package.json
+          file-url: https://unpkg.com/@adcaptcha/react@latest/package.json
+          static-checking: localIsNew
       - name: Install dependencies and build @adcaptcha/react
+        if: steps.check-react.outputs.changed == 'true'
         run: |
           cd packages/react
           npm ci
           npm run build
       - name: Publish @adcaptcha/react to NPM
+        if: steps.check-react.outputs.changed == 'true'
         run: |
           cd packages/react
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Check @adcaptcha/node version
+        id: check-node
+        uses: EndBug/version-check@v2
+        with:
+          file: packages/node/package.json
+          file-url: https://unpkg.com/@adcaptcha/node@latest/package.json
+          static-checking: localIsNew
       - name: Install dependencies and build @adcaptcha/node
+        if: steps.check-node.outputs.changed == 'true'
         run: |
           cd packages/node
           npm ci
           npm run build
       - name: Publish @adcaptcha/node to NPM
+        if: steps.check-node.outputs.changed == 'true'
         run: |
           cd packages/node
           npm publish --access public
