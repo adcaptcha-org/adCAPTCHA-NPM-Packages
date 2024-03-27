@@ -18,8 +18,15 @@ A Placement ID is used to specify what media will be shown in a CAPTCHA. To crea
 #### onComplete
 This is a callback that will execute after successfully completing a CAPTCHA. In this example we are using it to get the success token, but can also be used perform different actions e.g. to remove the disabled attribute from submission buttons and change styling rules.
 
+#### setKeywords
+If you would like to target specific media for a captcha using keywords, you can do this 
+by calling "window.adcap.setKeywords()" with an array of strings. The adCAPTCHA widget 
+will then prioritise media that match the keywords you have provided.
+
+Make sure to also add the keywords to the specified media in the [AdCAPTCHA dashboard](https://app.adcaptcha.com/login). 
+
 ```jsx
-import { AdCAPTCHA, getSuccessToken } from '@adcaptcha/react';
+import { AdCAPTCHA, getSuccessToken, setKeywords } from '@adcaptcha/react';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -28,6 +35,9 @@ function App() {
     const successToken = getSuccessToken(); // This returns a success token after successfully completing a CAPTCHA.
     setToken(successToken); // need to save the success token to then verify it.
   };
+
+  const keywords = ["running", "shoes", "marathon"];
+  setKeywords(keywords);
 
   // <adCAPTCHA /> shows the captcha on your website.
   return (
