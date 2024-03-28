@@ -1,4 +1,5 @@
-# React | Typescript | TailwindCSS
+# adCAPTCHA NPM React package example 
+## React | Typescript | TailwindCSS
 
 ## Available Scripts
 
@@ -8,4 +9,6 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+#### NOTE: `PLACEMENT_ID` has to be set in your `.env.local` and The Node example has to be running at the same time for the verification step to work.
 
