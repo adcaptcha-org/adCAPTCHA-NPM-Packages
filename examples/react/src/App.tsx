@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AdCAPTCHA, getSuccessToken } from '@adcaptcha/react';
 import axios from 'axios';
 import Navbar from './components/navbar';
@@ -7,6 +7,13 @@ import ResponseMessage from './components/responseMessage';
 function App() {
   const [token, setToken] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
+  const PLACEMENT_ID = process.env.REACT_APP_PLACEMENT_ID || '';
+
+  useEffect(() => {
+    if (!PLACEMENT_ID) {
+      setResponseMessage('Placement ID has not been set. Please set the REACT_APP_PLACEMENT_ID environment variable.');
+    }
+  }, [PLACEMENT_ID]);
 
   const handleComplete = () => {
     const successToken = getSuccessToken();
@@ -36,7 +43,7 @@ function App() {
           ) : null}
           <div className="flex mt-10">
             <AdCAPTCHA
-              placementID={'PLC-01HSJWPRM0HMWRNJGWP604DR8Z'}
+              placementID={PLACEMENT_ID}
               onComplete={handleComplete}
             />
             <button
