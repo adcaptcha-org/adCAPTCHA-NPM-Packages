@@ -24,27 +24,55 @@
             rows="4"
             required
           ></textarea>
-          <button type="submit" class="form-button">Submit</button>
+          <ResponseMessage v-if="responseMessage" :responseMessage="responseMessage" />
+          <AdCAPTCHA
+            :placementID="PLACEMENT_ID"
+            @complete="handleComplete"
+          />
+          <button type="submit" class="form-button" :disabled="!token">Submit</button>
         </form>
       </div>
     </section>
-  </template>
+</template>
   
-  <script setup lang="ts">
-  import { ref } from "vue";
+<script setup lang="ts">
+    import { ref, onMounted } from "vue";
+    import { AdCAPTCHA, getSuccessToken } from "@adcaptcha/vue";
+    import ResponseMessage from './ResponseMessage.vue';
+    
+    const form = ref({
+      name: "",
+      email: "",
+      comments: "",
+    });
+
+    const token = ref<string | null>(null);
+    const responseMessage = ref<string | null>(null);
+    const PLACEMENT_ID = import.meta.env.VITE_APP_ADCAPTCHA_PLACEMENT_ID || "";
+
+    const handleComplete = () => {
+      const successToken = getSuccessToken();
+      token.value = successToken;
+    };
+
+    onMounted(() => {
+      if (!PLACEMENT_ID) {
+        responseMessage.value = 'Placement ID has not been set. Please set the VITE_APP_ADCAPTCHA_PLACEMENT_ID environment variable.';
+      }
+    });
+    
+    const submitForm = () => {
+      if(token.value) {
+        console.log("Form submitted with token:", {...form.value, token: token.value});
+      } else {
+        console.error("Form not submitted. Please complete the CAPTCHA.");
+      }
+    };       
+    
+    
+</script>
   
-  const form = ref({
-    name: "",
-    email: "",
-    comments: "",
-  });
-  
-  const submitForm = () => {
-    console.log(form.value);
-  };
-  </script>
-  
-  <style scoped>
+<style scoped>
 .contact-section {
   background-color: #000; 
   padding: 4rem 2rem;

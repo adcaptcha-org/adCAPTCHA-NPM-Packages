@@ -1,5 +1,5 @@
 <template>
-    <nav :class="['navbar', { 'navbar-scrolled': isScrolled }]">
+    <nav :class="['navbar']">
       <ul class="navbar-links">
         <li><a href="#home" >Home</a></li>
         <li><a href="#contact" >Contact</a></li>

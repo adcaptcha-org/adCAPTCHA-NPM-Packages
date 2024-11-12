@@ -1,35 +1,35 @@
 {
   "name": "@adcaptcha/vue",
   "version": "1.0.0",
-  "description": "A Vue.js integration for adCAPTCHA",
-  "main": "src/index.ts",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/adcaptcha-org/adCAPTCHA-NPM-Packages.git"
+    "test": "vitest --dom",
+    "build": "vite build",
+    "dev": "vite",
+    "test:watch": "vitest --watch"
   },
   "keywords": [
-    "VUE",
     "adCAPTCHA",
+    "react",
     "captcha",
-    "security",
-    "vue-component"
+    "security"
   ],
+  "homepage": "https://docs.adcaptcha.com",
   "author": "adCAPTCHA",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/adcaptcha-org/adCAPTCHA-NPM-Packages/issues"
-  },
-  "homepage": "https://docs.adcaptcha.com",
-  "dependencies": {
-    "vue": "^3.5.12"
-  },
+  "description": "",
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-typescript": "^7.26.0",
-    "typescript": "^5.6.3"
+    "@testing-library/vue": "^8.1.0",
+    "@types/node": "^22.9.0",
+    "@vitejs/plugin-vue": "^5.1.5",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.4",
+    "vue-loader": "^17.4.2",
+    "vue-tsc": "^2.1.10"
   }
 }

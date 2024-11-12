@@ -16,11 +16,19 @@ export function loadScript(): Promise<void> {
     script.defer = true;
     script.type = 'module';
     script.async = true;
-    script.onload = function () {
+    script.onload = () => {
       window.adcap.init();
       resolve();
     };
     script.onerror = reject;
-    document.getElementsByTagName('head')[0].appendChild(script);
+    document.head.appendChild(script);  
   });
 }
+
+export const setKeywords = (keywords: string[]) => {
+  if (window.adcap) {
+    window.adcap.setKeywords(keywords);
+  }
+};
+
+export const getSuccessToken = () => window.adcap ? window.adcap.successToken : null;
