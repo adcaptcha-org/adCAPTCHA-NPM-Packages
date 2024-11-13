@@ -10,16 +10,22 @@
     "dev": "vite",
     "test:watch": "vitest --watch"
   },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
   "keywords": [
     "adCAPTCHA",
-    "react",
+    "vue",
     "captcha",
     "security"
   ],
   "homepage": "https://docs.adcaptcha.com",
+  "repository": {
+    "url": "https://github.com/adcaptcha-org/adCAPTCHA-NPM-Packages"
+  },
   "author": "adCAPTCHA",
   "license": "MIT",
-  "description": "",
+  "description": " Vue 3 component for adCAPTCHA",
   "devDependencies": {
     "@testing-library/vue": "^8.1.0",
     "@types/node": "^22.9.0",

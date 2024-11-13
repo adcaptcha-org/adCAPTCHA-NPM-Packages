@@ -22,6 +22,23 @@ describe('AdCaptcha Component', () => {
     expect(util.loadScript).toHaveBeenCalledOnce();
   });
 
+  describe('setKeywords', () => {
+    it('test the setKeywords function', async () => {
+      const keywords = ['test-keyword-1', 'test-keyword-2'];
+      const setKeywords = vi.fn();
+      global.window.adcap = { setKeywords };
+      util.setKeywords(keywords);
+      expect(setKeywords).toHaveBeenCalledWith(keywords);
+    });
+
+    it('test when is no window.adcap should not call setKeywords', async () => {
+      const keywords = ['test-keyword-1', 'test-keyword-2'];
+      const setKeywords = vi.fn();
+      util.setKeywords(keywords);
+      expect(setKeywords).not.toHaveBeenCalled();
+    });
+  });
+
   describe('getSuccessToken', () => {
     it('test the getSuccessToken function', async () => {
       const successToken = 'test-success-token';
@@ -35,6 +52,4 @@ describe('AdCaptcha Component', () => {
         expect(token).toBeNull();
       });
     });
-
-  
 });
