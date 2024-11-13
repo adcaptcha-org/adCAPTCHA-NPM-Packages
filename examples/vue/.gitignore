@@ -23,6 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 # Ignore .env files containing sensitive data
-.env
 .env.local
 .env.*.local
