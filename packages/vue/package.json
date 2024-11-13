@@ -26,6 +26,7 @@
   "author": "adCAPTCHA",
   "license": "MIT",
   "description": " Vue 3 component for adCAPTCHA",
+  "type": "module",
   "devDependencies": {
     "@testing-library/vue": "^8.1.0",
     "@types/node": "^22.9.0",
