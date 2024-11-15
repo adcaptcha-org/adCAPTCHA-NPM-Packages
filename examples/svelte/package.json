@@ -10,7 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json && tsc -p tsconfig.node.json"
   },
   "devDependencies": {
-     "@adcaptcha/vue": "file:../../packages/svelte",
+     "@adcaptcha/svelte": "file:../../packages/svelte",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tsconfig/svelte": "^5.0.4",
     "svelte": "^5.1.3",

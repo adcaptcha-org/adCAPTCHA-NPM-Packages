@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vitest/config';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
-})
+	plugins: [sveltekit()],
+	test: {
+		globals: true,
+    	environment: 'happy-dom',
+    	setupFiles: './tests/setup.ts', 
+	}
+});

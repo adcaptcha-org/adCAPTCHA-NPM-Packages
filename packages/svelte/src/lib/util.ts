@@ -1,6 +1,6 @@
 declare global {
     interface Window {
-      adcap: {
+      adcap?: {
         setupTriggers: (config: { onComplete: () => void }) => void;
         setKeywords: (keywords: string[]) => void;
         init: () => void;
@@ -16,20 +16,23 @@ declare global {
       script.defer = true;
       script.type = 'module';
       script.async = true;
-      script.onload = () => {
-        window.adcap.init();
+      script.onload = function () {
+        if (window.adcap) {
+          window.adcap.init();
+        }
         resolve();
       };
       script.onerror = reject;
-      document.head.appendChild(script);  
+      document.getElementsByTagName('head')[0].appendChild(script);
     });
   }
   
-  export const setKeywords = (keywords: string[]) => {
+  export function setKeywords(keywords: string[]): void {
     if (window.adcap) {
       window.adcap.setKeywords(keywords);
     }
-  };
+  }
   
-  export const getSuccessToken = () => window.adcap ? window.adcap.successToken : null;
-  
+  export function getSuccessToken(): string | null {
+    return window.adcap ? window.adcap.successToken : null;
+  }
