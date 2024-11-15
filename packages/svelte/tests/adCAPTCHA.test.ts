@@ -9,18 +9,24 @@ describe('adCaptcha testing components', () => {
         delete window.adcap;
     });
 
-    // it('renders a div with the correct data-adcaptcha attribute', async () => {
-    //     const loadScriptMock = vi.fn(() => Promise.resolve());
-    //     vi.spyOn(util, 'loadScript').mockImplementation(loadScriptMock);
+    it('renders a div with the correct data-adcaptcha attribute', async () => {
+        const loadScriptMock = vi.fn(() => Promise.resolve());
+        vi.spyOn(util, 'loadScript').mockImplementation(loadScriptMock);
+        
+        const placementID = 'test-placement-id';
+        render(AdCaptcha, { placementID });
     
-    //     const placementID = 'test-placement-id';
-    //     render(AdCaptcha, { placementID });
+        // Ensure that the element is rendered correctly
+        const adCaptchaElement = await screen.findByTestId('adCaptcha');
+        expect(adCaptchaElement).toBeDefined();
+        expect(adCaptchaElement.getAttribute('data-adcaptcha')).toEqual(placementID);
+        
+        // Check if loadScript was called
+        expect(util.loadScript).toHaveBeenCalledOnce();
     
-    //     const adCaptchaElement = await screen.findByTestId('adCaptcha');
-    //     expect(adCaptchaElement).toBeDefined();
-    //     expect(adCaptchaElement.getAttribute('data-adcaptcha')).toEqual(placementID);
-    //     expect(util.loadScript).toHaveBeenCalledOnce();
-    // });
+        // Check if setupTriggers was called
+        expect(global.window.adcap.setupTriggers).toHaveBeenCalledWith({ onComplete: expect.any(Function) });
+      });
     
     // it('calls the handleComplete function on CAPTCHA completion', async () => {
     //     const handleCompleteMock = vi.fn();

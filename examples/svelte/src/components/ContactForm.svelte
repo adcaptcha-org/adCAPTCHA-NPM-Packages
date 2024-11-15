@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    // import { AdCAPTCHA, getSuccessToken } from "@adcaptcha/vue"; 
+    import { adCAPTCHA as AdCAPTCHA , getSuccessToken } from "@adcaptcha/svelte";
     import ResponseMessage from './ResponseMessage.svelte';
     
     let form = {
@@ -11,15 +11,15 @@
   
     let token: string | null = null;
     let responseMessage: string | null = null;
-    const PLACEMENT_ID = import.meta.env.VITE_APP_ADCAPTCHA_PLACEMENT_ID || "";
+    const PLACEMENT_ID = import.meta.env.VITE_SVELTE_APP_PLACEMENT_ID || "";
   
-    // const handleComplete = () => {
-    //   token = getSuccessToken();
-    // };
+    const handleComplete = () => {
+      token = getSuccessToken();
+    };
   
     onMount(() => {
       if (!PLACEMENT_ID) {
-        responseMessage = 'Placement ID has not been set. Please set the VITE_APP_ADCAPTCHA_PLACEMENT_ID environment variable.';
+        responseMessage = 'Placement ID has not been set. Please set the PUBLIC_SVELTE_APP_PLACEMENT_ID environment variable.';
       }
     });
   
@@ -62,10 +62,10 @@
           <ResponseMessage {responseMessage} />
         {/if}
         
-        <!-- <AdCAPTCHA
+        <AdCAPTCHA
           placementID={PLACEMENT_ID}
           on:complete={handleComplete}
-        /> -->
+        />
         
         <button type="submit" class="form-button" disabled={!token}>Submit</button>
       </form>

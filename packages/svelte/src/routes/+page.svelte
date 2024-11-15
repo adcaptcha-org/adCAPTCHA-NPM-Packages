@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
     import { adCAPTCHA as AdCAPTCHA , getSuccessToken } from '../lib/index.ts'; 
-    import { PUBLIC_SVELTE_APP_PLACEMENT_ID } from '$env/static/public'
+    import { PUBLIC_SVELTE_APP_PLACEMENT_ID } from '$env/static/public';
 
     let PLACEMENT_ID = PUBLIC_SVELTE_APP_PLACEMENT_ID;
     

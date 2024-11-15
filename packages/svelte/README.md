@@ -1,58 +1,43 @@
-# create-svelte
+# adCAPTCHA Svelte
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This package provides a Svelte component for adCAPTCHA. The AdCAPTCHA component is used to show a CAPTCHA on your website, by adding the necessary script and html. After a successful completion of a captcha a success token is exposed which should be validated (using [@adcaptcha/node](/packages/node/README.md)) to make sure it is real and that it hasn’t already been used before.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install @adcaptcha/svelte
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+#### Placement ID
+A Placement ID is used to specify what media will be shown in a CAPTCHA. To create a Placement ID, visit [AdCAPTCHA dashboard](https://app.adcaptcha.com/login). 
 
-```bash
-npm run dev
+[Documentation](https://docs.adcaptcha.com/wordpress/setup) to learn how to create a Placement ID.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+#### onComplete
+This is a callback that will execute after successfully completing a CAPTCHA. In this example we are using it to get the success token, but can also be used perform different actions e.g. to remove the disabled attribute from submission buttons and change styling rules.
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+#### setKeywords
+If you would like to target specific media for a captcha using keywords, you can do this 
+by calling "window.adcap.setKeywords()" with an array of strings. The adCAPTCHA widget 
+will then prioritise media that match the keywords you have provided.
 
-## Building
+Make sure to also add the keywords to the specified media in the [AdCAPTCHA dashboard](https://app.adcaptcha.com/login). 
 
-To build your library:
+```jsx
+<script lang="ts">
+    import { adCAPTCHA as AdCAPTCHA , getSuccessToken } from "@adcaptcha/svelte";
 
-```bash
-npm run package
-```
+    let token: string | null = null;
+    const PLACEMENT_ID = import.meta.env.VITE_SVELTE_APP_PLACEMENT_ID || "";
 
-To create a production version of your showcase app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
+    const handleComplete = () => {
+      token = getSuccessToken();
+    };
+</script>
+  <div>
+    <AdCAPTCHA placementID={PLACEMENT_ID} onComplete={handleComplete} />
+  </div>
 ```
