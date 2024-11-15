@@ -29,21 +29,21 @@ Make sure to also add the keywords to the specified media in the [AdCAPTCHA dash
 <template>
   <div class="App">
     <AdCAPTCHA
-      :placementID="'PLC-01HN2YE5YQACAFM1YEWBDR2419'"
+      :placementID="PLACEMENT_ID"
       @complete="handleComplete"
     />
   </div>
 </template>
 <script setup lang="ts">
-    import { ref } from 'vue';
-    import { AdCAPTCHA, getSuccessToken, setKeywords } from "@adcaptcha/vue";
+    import { AdCAPTCHA, getSuccessToken } from "@adcaptcha/vue";
     const token = ref<string | null>(null);
 
+    const token = ref<string | null>(null);
+    const PLACEMENT_ID = import.meta.env.VITE_APP_ADCAPTCHA_PLACEMENT_ID || "";
+    
     const handleComplete = () => {
         const successToken = getSuccessToken();
         token.value = successToken;
     };
-
-    setKeywords(["running", "shoes", "marathon"]);
 </script>
 ```
