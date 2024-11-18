@@ -25,9 +25,8 @@
 </script>
 
 <div class="container">
-    <h1>Welcome to Svelte library project</h1>
-    <p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-    <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+    <h1>Welcome to adCAPTCHA Svelte library project</h1>
+    
     <form on:submit|preventDefault={handleSubmit} class="form-container">
         <div class="form-field">
             <label for="username">Username:</label>

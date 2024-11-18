@@ -9,7 +9,7 @@ declare global {
     }
   }
   
-  export function loadScript(): Promise<void> {
+  export async function loadScript(): Promise<void> {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = "https://widget.adcaptcha.com/index.js";
