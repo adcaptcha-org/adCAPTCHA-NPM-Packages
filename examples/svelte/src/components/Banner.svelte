@@ -8,14 +8,10 @@
 <style>
     .hero-section {
       width: 100vw;
-      height: 100vh;
+      height: 50vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: url('src/assets/background.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
       color: #fff; 
       text-align: center;
       position: relative;
