@@ -1,2 +1,2 @@
 export { default as adCAPTCHA } from './adCAPTCHA.svelte';
-export { getSuccessToken, setKeywords } from './util.ts';
+export { getSuccessToken, setKeywords } from './util';

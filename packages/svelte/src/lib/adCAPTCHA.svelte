@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { loadScript } from './util.ts';
+    import { loadScript } from './util';
 
     type OnCompleteHandler = () => void;
   

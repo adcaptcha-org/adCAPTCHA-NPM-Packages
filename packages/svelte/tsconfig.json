@@ -10,9 +10,9 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"target": "esnext",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"target": "ESNext",
 		"lib": ["dom", "esnext"],
 		"isolatedModules": true,
 		"types": ["svelte"]
