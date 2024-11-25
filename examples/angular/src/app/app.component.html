@@ -1,25 +1,45 @@
-<div class="text-center">
-  <header class="bg-gray-800 min-h-screen flex flex-col items-center justify-center text-white">
-    <div *ngIf="responseMessage" class="rounded-md bg-white p-4">
-      <div class="flex">
-        <h3 class="text-sm font-medium text-black">{{ responseMessage }}</h3>
-      </div>
+
+
+<div class="container">
+  <img src="logo_gradient.png" alt="Logo" class="logo">
+  <h1>adCAPTCHA testing page</h1>
+  <form #contactForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <label for="name">Name</label>
+    <input 
+      id="name" 
+      name="name" 
+      type="text" 
+      [(ngModel)]="formData.name" 
+      required 
+      #name="ngModel">
+    <div *ngIf="name.invalid && name.touched" class="error">
+      Name is required.
     </div>
 
-    <div class="flex mt-10">
-      <div class="adcaptcha-container" [attr.data-adcaptcha]="placementID">
-        <app-adcaptcha [placementID]="placementID" (onComplete)="handleComplete()"></app-adcaptcha>
-        <div class="adcaptcha"></div>
-      </div>
-     
-      <button
-        type="button"
-        [disabled]="!token"
-        (click)="handleVerifyToken()"
-        class="rounded-md ml-10 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Verify Captcha
-      </button>
+    <label for="email">Email</label>
+    <input 
+      id="email" 
+      name="email" 
+      type="email" 
+      [(ngModel)]="formData.email" 
+      required 
+      #email="ngModel">
+    <div *ngIf="email.invalid && email.touched" class="error">
+      Valid email is required.
     </div>
-  </header>
+
+    <label for="message">Message</label>
+    <textarea 
+      id="message" 
+      name="message" 
+      [(ngModel)]="formData.message" 
+      required 
+      #message="ngModel">
+    </textarea>
+    <div *ngIf="message.invalid && message.touched" class="error">
+      Message is required.
+    </div>
+
+    <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+  </form>
 </div>
