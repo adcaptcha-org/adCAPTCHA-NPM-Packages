@@ -12,11 +12,9 @@ declare global {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AdcaptchaService {
-
-  constructor() {}
 
   loadScript(): Promise<void> {
     return new Promise((resolve, reject) => {

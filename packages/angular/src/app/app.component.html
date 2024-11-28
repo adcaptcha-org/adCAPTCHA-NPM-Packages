@@ -1,7 +1,7 @@
 <div class="container">
   <img src="logo_gradient.png" alt="Logo" class="logo">
   <h1>adCAPTCHA testing page</h1>
-  <form #contactForm="ngForm"  novalidate>
+  <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
     <label for="name">Name</label>
     <input 
       id="name" 
@@ -38,6 +38,11 @@
       Message is required.
     </div>
 
+    <lib-adcaptcha 
+      [placementID]="placementID" 
+      (onComplete)="handleComplete()">
+    </lib-adcaptcha>
+   
     <button type="submit" [disabled]="contactForm.invalid">Submit</button>
   </form>
 </div>

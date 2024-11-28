@@ -13,7 +13,6 @@
     <div *ngIf="name.invalid && name.touched" class="error">
       Name is required.
     </div>
-
     <label for="email">Email</label>
     <input 
       id="email" 
@@ -34,10 +33,14 @@
       required 
       #message="ngModel">
     </textarea>
-    <div *ngIf="message.invalid && message.touched" class="error">
+    <!-- <div *ngIf="message.invalid && message.touched" class="error">
       Message is required.
-    </div>
+    </div> -->
+   
 
-    <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+    <!-- app.component.html -->
+    <lib-adcaptcha [placementID]="placementID" (onComplete)="handleComplete()"></lib-adcaptcha>
+    <button type="submit" [disabled]="contactForm.invalid || !token">Submit</button>
   </form>
+  <div *ngIf="token">Success Token: {{ token }}</div>
 </div>
