@@ -1,7 +1,7 @@
 <div class="container">
   <img src="logo_gradient.png" alt="Logo" class="logo">
   <h1>adCAPTCHA testing page</h1>
-  <form #contactForm="ngForm"  novalidate>
+  <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)" autocomplete="on">
     <label for="name">Name</label>
     <input 
       id="name" 
@@ -9,10 +9,12 @@
       type="text" 
       [(ngModel)]="formData.name" 
       required 
-      #name="ngModel">
+      #name="ngModel"
+      autocomplete="name">
     <div *ngIf="name.invalid && name.touched" class="error">
       Name is required.
     </div>
+
     <label for="email">Email</label>
     <input 
       id="email" 
@@ -20,7 +22,8 @@
       type="email" 
       [(ngModel)]="formData.email" 
       required 
-      #email="ngModel">
+      #email="ngModel"
+      autocomplete="email">
     <div *ngIf="email.invalid && email.touched" class="error">
       Valid email is required.
     </div>
@@ -31,16 +34,18 @@
       name="message" 
       [(ngModel)]="formData.message" 
       required 
-      #message="ngModel">
+      #message="ngModel"
+      autocomplete="message">
     </textarea>
-    <!-- <div *ngIf="message.invalid && message.touched" class="error">
+    <div *ngIf="message.invalid && message.touched" class="error">
       Message is required.
-    </div> -->
-   
+    </div>
 
-    <!-- app.component.html -->
-    <lib-adcaptcha [placementID]="placementID" (onComplete)="handleComplete()"></lib-adcaptcha>
-    <button type="submit" [disabled]="contactForm.invalid || !token">Submit</button>
+    <lib-adcaptcha 
+      [placementID]="placementID" 
+      (onComplete)="handleComplete()">
+    </lib-adcaptcha>
+   
+    <button type="submit" [disabled]="contactForm.invalid">Submit</button>
   </form>
-  <div *ngIf="token">Success Token: {{ token }}</div>
 </div>

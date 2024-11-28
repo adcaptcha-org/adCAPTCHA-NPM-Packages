@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // import { environment } from '../environments/environments';
-import { AdcaptchaComponent, AdcaptchaService } from '@adcaptcha/angular';
-
+import { AdcaptchaComponent, AdcaptchaService } from "@adcaptcha/angular";
 
 
 
@@ -11,6 +10,7 @@ import { AdcaptchaComponent, AdcaptchaService } from '@adcaptcha/angular';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule, AdcaptchaComponent], 
+  providers: [AdcaptchaService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

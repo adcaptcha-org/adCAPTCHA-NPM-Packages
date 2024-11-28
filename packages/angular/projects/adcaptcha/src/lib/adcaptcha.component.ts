@@ -11,31 +11,40 @@ import { AdcaptchaService } from './adcaptcha.service';
   styleUrls: []
 })
 export class AdcaptchaComponent implements OnInit {
-  constructor(private adcaptchaService: AdcaptchaService) {}
   @Input() placementID: string = '';
   @Output() onComplete = new EventEmitter<void>();
 
+  constructor(private adcaptchaService: AdcaptchaService) {
+    console.log('AdcaptchaComponent constructed++++++++++++++++');
+  }
+
+  private scriptLoaded: boolean = false;
+
   ngOnInit(): void {
+    console.log('AdcaptchaComponent initialized----------------');
     this.setupAdCAPTCHA();
   }
 
-  // ngOnDestroy(): void {
-  //   // Cleanup if necessary
-
-
-  // }
+  ngOnDestroy(): void {
+    if (this.scriptLoaded) {
+      // Optionally clean up if needed (e.g., removing event listeners)
+      console.log('AdcaptchaComponent destroyed');
+    }
+  }
 
   private setupAdCAPTCHA() {
     this.adcaptchaService
       .loadScript()
       .then(() => {
+        if (!window.adcap || typeof window.adcap.setupTriggers !== 'function') {
+          throw new Error('AdCAPTCHA script loaded, but window.adcap is not initialized correctly.');
+        }
         console.log('CAPTCHA script loaded in AdcaptchaComponent');
+        this.scriptLoaded = true;
         window.adcap.setupTriggers({
           onComplete: () => {
             console.log('CAPTCHA completed inside AdcaptchaComponent');
-            if (this.onComplete) {
-              this.onComplete.emit(); 
-            }
+            this.onComplete.emit(); 
           },
         });
       })

@@ -13,6 +13,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "optimization": false,
+            "sourceMap": true,
             "outputPath": "dist/angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -50,7 +52,8 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"

@@ -24,8 +24,12 @@ export class AdcaptchaService {
       script.type = 'module';
       script.async = true;
       script.onload = () => {
-        window.adcap.init();
-        resolve();
+        if (window.adcap) {
+          window.adcap.init();
+          resolve();
+        } else {
+          reject(new Error('window.adcap is not available'));
+        }
       };
       script.onerror = reject;
       document.head.appendChild(script);
