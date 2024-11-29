@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { environment } from '../environments/environments';
+import { environment } from '../environments/environments';
 import { AdcaptchaComponent, AdcaptchaService } from "@adcaptcha/angular";
-
-
 
 @Component({
   selector: 'app-root',
@@ -21,7 +19,7 @@ export class AppComponent {
     message: ''
   };
   token: string | null = null;
-  placementID: string = "PLC-01HMVA7BKYPVR1118RSMW7YZ47";
+  placementID: string = environment.placementID;
   constructor(private adcaptchaService: AdcaptchaService) {}
 
   ngOnInit() {
@@ -39,8 +37,7 @@ export class AppComponent {
 
   onSubmit(contactForm: any): void {
     if (this.token) {
-      console.log('Form submitted with token:', this.token);
-      console.log('Form Data:', this.formData);
+      console.log(`Form submitted with token: ${this.token}, Form Data:`, this.formData);
     } else {
       console.error('Form not submitted. Please complete the CAPTCHA.');
     }
