@@ -11,7 +11,7 @@
   
     let token: string | null = null;
     let responseMessage: string | null = null;
-    const PLACEMENT_ID = import.meta.env.VITE_SVELTE_APP_PLACEMENT_ID || "";
+    const PLACEMENT_ID = import.meta.env.VITE_ADCAPTCHA_PLACEMENT_ID || "";
   
     const handleComplete = () => {
       token = getSuccessToken();
@@ -19,7 +19,7 @@
   
     onMount(() => {
       if (!PLACEMENT_ID) {
-        responseMessage = 'Placement ID has not been set. Please set the PUBLIC_SVELTE_APP_PLACEMENT_ID environment variable.';
+        responseMessage = 'Placement ID has not been set. Please set the VITE_ADCAPTCHA_PLACEMENT_ID environment variable.';
       }
     });
   

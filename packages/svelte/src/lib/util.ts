@@ -36,3 +36,4 @@ declare global {
   export function getSuccessToken(): string | null {
     return window.adcap ? window.adcap.successToken : null;
   }
+  

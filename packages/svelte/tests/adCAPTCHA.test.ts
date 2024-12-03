@@ -3,7 +3,7 @@ import {vi, describe, it, expect, beforeEach} from 'vitest';
 import * as util from '../src/lib/util.ts';
 import AdCaptcha from '../src/lib/AdCaptcha.svelte';
 
-describe('adCaptcha testing components', () => {
+describe('adCAPTCHA testing components', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         delete window.adcap;
@@ -13,7 +13,7 @@ describe('adCaptcha testing components', () => {
         expect(typeof window).toBe('object'); 
     });
 
-    describe('AdCaptcha', () => {
+    describe('adCAPTCHA', () => {
         it('renders with the provided placementID, calls loadScript on mount', async () => {
             const loadScriptMock = vi.spyOn(util, 'loadScript').mockResolvedValue({});
             const placementID = 'test-placement-id';
