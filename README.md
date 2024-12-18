@@ -22,6 +22,12 @@ npm install @adcaptcha/react
 npm install @adcaptcha/svelte
 ```
 
+### adCAPTCHA Integration
+- [@adcaptcha/vue](/packages/vue/README.md)
+```bash
+npm install @adcaptcha/vue
+```
+
 ### adCAPTCHA Verification
 - [@adcaptcha/node](/packages/node/README.md)
 ```bash
