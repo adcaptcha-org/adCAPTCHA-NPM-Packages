@@ -10,19 +10,25 @@ Moreover, the implementation of adCAPTCHA is designed with performance in mind. 
 
 ## Packages
 
-### Captcha Integration
+### adCAPTCHA Integration
 - [@adcaptcha/react](/packages/react/README.md)
 ```bash
 npm install @adcaptcha/react
 ```
 
-### Captcha Integration
+### adCAPTCHA Integration
+- [@adcaptcha/svelte](/packages/svelte/README.md)
+```bash
+npm install @adcaptcha/svelte
+```
+
+### adCAPTCHA Integration
 - [@adcaptcha/vue](/packages/vue/README.md)
 ```bash
 npm install @adcaptcha/vue
 ```
 
-### Captcha Verification
+### adCAPTCHA Verification
 - [@adcaptcha/node](/packages/node/README.md)
 ```bash
 npm install @adcaptcha/node
