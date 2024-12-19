@@ -18,26 +18,6 @@ ng build adcaptcha
 ```
 This will create a dist folder containing the compiled adcaptcha package.
 
-## Available Scripts  
-
-### `ng serve`  
-Starts the application in development mode.  
-Open [http://localhost:4200](http://localhost:4200) in your browser to view it.
-
----
-
-## Setup Instructions  
-
-### 1. Configure Environment Variables  
-Set your `PLACEMENT_ID` in the `src/environments` folder.  
-
-- `environment.ts` (for development):
-  ```typescript
-  export const environment = {
-    production: false,
-    placementID: 'your-placement-id'
-  };
-  ```
 
 # Angular
 
