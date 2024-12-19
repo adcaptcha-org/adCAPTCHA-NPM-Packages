@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AdcaptchaService } from './adcaptcha.service';
+import { AdcaptchaService } from '../src/adcaptcha.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing'; 
 
 describe('AdcaptchaService', () => {

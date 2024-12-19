@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AdcaptchaComponent } from './adcaptcha.component';
-import { AdcaptchaService } from './adcaptcha.service';
+import { AdcaptchaComponent } from '../src/adcaptcha.component';
+import { AdcaptchaService } from '../src/adcaptcha.service';
 
 describe('AdcaptchaComponent', () => {
   let component: AdcaptchaComponent;

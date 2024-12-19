@@ -1,11 +1,22 @@
 {
   "name": "@adcaptcha/angular",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sideEffects": false,
   "license": "MIT",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng-packagr -p ng-package.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
