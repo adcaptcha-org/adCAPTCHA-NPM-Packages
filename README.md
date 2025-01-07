@@ -33,3 +33,9 @@ npm install @adcaptcha/vue
 ```bash
 npm install @adcaptcha/node
 ```
+
+### adCAPTCHA Integration
+- [@adcaptcha/angular](/packages/angular/projects/adcaptcha/README.md)
+```bash
+npm install @adcaptcha/angular
+```
