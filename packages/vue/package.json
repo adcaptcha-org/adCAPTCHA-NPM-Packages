@@ -13,6 +13,11 @@
   "peerDependencies": {
     "vue": "^3.0.0"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "keywords": [
     "adCAPTCHA",
     "vue",
@@ -36,6 +41,7 @@
     "jsdom": "^25.0.1",
     "typescript": "^5.6.3",
     "vite": "^5.4.11",
+    "vite-plugin-dts": "^4.4.0",
     "vitest": "^2.1.4",
     "vue-loader": "^17.4.2",
     "vue-tsc": "^2.1.10"
