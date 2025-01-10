@@ -1,6 +1,6 @@
 {
 	"name": "@adcaptcha/svelte",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"type": "module",
 	"main": "dist/index.js",
 	"description": "adCAPTCHA package for Svelte",
@@ -43,6 +43,12 @@
 	"dependencies": {
 		"svelte": "^5.0.0"
 	},
+	"keywords": [
+		"adCAPTCHA",
+		"svelte",
+		"captcha",
+		"security"
+  	],
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",

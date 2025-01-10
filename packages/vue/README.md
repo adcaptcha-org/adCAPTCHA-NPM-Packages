@@ -36,7 +36,7 @@ Make sure to also add the keywords to the specified media in the [AdCAPTCHA dash
 </template>
 <script setup lang="ts">
     import { AdCAPTCHA, getSuccessToken } from "@adcaptcha/vue";
-    const token = ref<string | null>(null);
+    import { ref } from "vue";
 
     const token = ref<string | null>(null);
     const PLACEMENT_ID = import.meta.env.VITE_APP_ADCAPTCHA_PLACEMENT_ID || "";
