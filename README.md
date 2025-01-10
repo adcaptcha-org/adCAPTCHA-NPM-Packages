@@ -28,6 +28,12 @@ npm install @adcaptcha/svelte
 npm install @adcaptcha/vue
 ```
 
+### adCAPTCHA Integration
+- [@adcaptcha/angular](/packages/angular/projects/adcaptcha/README.md)
+```bash
+npm install @adcaptcha/angular
+```
+
 ### adCAPTCHA Verification
 - [@adcaptcha/node](/packages/node/README.md)
 ```bash
