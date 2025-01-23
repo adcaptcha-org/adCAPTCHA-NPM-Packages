@@ -1,23 +1,80 @@
 const express = require('express');
-const { verify } = require('@adcaptcha/node');
-const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
+const { AdCaptchaAPIClient } = require('@adcaptcha/node');
+
+dotenv.config();
 const app = express();
-require('dotenv').config({ path: '.env.local' });
+const client = new AdCaptchaAPIClient("86ad2e8c-29e9-4186-b0cf-95a5905ec998");
 
-app.use(cors());
-app.use(express.json());
-
-app.post('/verifyToken', async (req, res) => {
-  const apiKey = process.env.API_KEY;
-  const token = req.body.token;
-
+async function mediaFetchAll() {
   try {
-    const response = await verify(apiKey, token);
-    res.json(response);
+    const result = await client.media.fetchAll();
+    console.log(result.data); 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to verify token' });
+    console.error("Error fetching sites:", error);
   }
-});
+}
 
-app.listen(3001, () => console.log('Server running on port 3001'));
+async function mediaFetchByID() {
+  try {
+    const result = await client.media.fetchByID("MDA-01JH5TFRZJA6YC7QGA8EBBK02G");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function deleteMedia() {
+  try {
+    const result = await client.media.deleteMedia("MDA-01JH5TFRZJA6YC7QGA8EBBK02G");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function placementsFetchAll() {
+  try {
+    const result = await client.placements.fetchAll(1);
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function placementsfetchByID() {
+  try {
+    const result = await client.placements.fetchByID("PLC-01JH86F5DTFXKRK364G444H05Q");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function createPlacements() {
+  try {
+    const result = await client.placements.createPlacement( "New Placement", "STE-01J8T6SNY0E41NV9VVD2PQKNF0"
+    );
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function sitesFetchAll() {
+  try {
+    const result = await client.sites.fetchAll();
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+createPlacements();
+
+const PORT = 3002;
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
