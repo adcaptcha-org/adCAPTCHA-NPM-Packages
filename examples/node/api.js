@@ -5,7 +5,7 @@ const { AdCaptchaAPIClient } = require('@adcaptcha/node');
 
 dotenv.config();
 const app = express();
-const client = new AdCaptchaAPIClient("86ad2e8c-29e9-4186-b0cf-95a5905ec998");
+const client = new AdCaptchaAPIClient("c17832c7-c088-417d-b652-6378650965ec");
 
 async function mediaFetchAll() {
   try {
@@ -54,7 +54,7 @@ async function placementsfetchByID() {
 
 async function createPlacements() {
   try {
-    const result = await client.placements.createPlacement( "New Placement", "STE-01J8T6SNY0E41NV9VVD2PQKNF0"
+    const result = await client.placements.createPlacement( "Second Placement", "STE-01JHTK6HM50CVN2Q0BJRZT0Z3S"
     );
     console.log(result.data); 
   } catch (error) {
@@ -62,6 +62,7 @@ async function createPlacements() {
   }
 }
 
+//  example for sites API
 async function sitesFetchAll() {
   try {
     const result = await client.sites.fetchAll();
@@ -71,7 +72,55 @@ async function sitesFetchAll() {
   }
 }
 
-createPlacements();
+async function sitesFetchByID() {
+  try {
+    const result = await client.sites.fetchByID("STE-01JHTK6HM50CVN2Q0BJRZT0Z3S");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function sitesFetchStatsForSite() {
+  try {
+    const result = await client.sites.fetchStatsForSite("STE-01JHTK6HM50CVN2Q0BJRZT0Z3S", 2);
+    console.log(result.data.statusPerDay); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function sitesCreateSite() {
+  try {
+    const result = await client.sites.createSite("Terency Hill", "https://piedone.com");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function sitesUpdateSite() {
+  try {
+    const result = await client.sites.updateSite("STE-01JJ9GGYG0462TE9E2NR6ACED1", "Terency Hill updated", "https://piedone.com");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+
+async function sitesDeleteSite() {
+  try {
+    const result = await client.sites.deleteSite("STE-01JJ9GGYG0462TE9E2NR6ACED1");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+
+
+sitesDeleteSite();
 
 const PORT = 3002;
 
