@@ -7,61 +7,6 @@ dotenv.config();
 const app = express();
 const client = new AdCaptchaAPIClient("c17832c7-c088-417d-b652-6378650965ec");
 
-async function mediaFetchAll() {
-  try {
-    const result = await client.media.fetchAll();
-    console.log(result.data); 
-  } catch (error) {
-    console.error("Error fetching sites:", error);
-  }
-}
-
-async function mediaFetchByID() {
-  try {
-    const result = await client.media.fetchByID("MDA-01JH5TFRZJA6YC7QGA8EBBK02G");
-    console.log(result.data); 
-  } catch (error) {
-    console.error("Error fetching sites:", error);
-  }
-}
-
-async function deleteMedia() {
-  try {
-    const result = await client.media.deleteMedia("MDA-01JH5TFRZJA6YC7QGA8EBBK02G");
-    console.log(result.data); 
-  } catch (error) {
-    console.error("Error fetching sites:", error);
-  }
-}
-
-async function placementsFetchAll() {
-  try {
-    const result = await client.placements.fetchAll(1);
-    console.log(result.data); 
-  } catch (error) {
-    console.error("Error fetching sites:", error);
-  }
-}
-
-async function placementsfetchByID() {
-  try {
-    const result = await client.placements.fetchByID("PLC-01JH86F5DTFXKRK364G444H05Q");
-    console.log(result.data); 
-  } catch (error) {
-    console.error("Error fetching sites:", error);
-  }
-}
-
-async function createPlacements() {
-  try {
-    const result = await client.placements.createPlacement( "Second Placement", "STE-01JHTK6HM50CVN2Q0BJRZT0Z3S"
-    );
-    console.log(result.data); 
-  } catch (error) {
-    console.error("Error fetching sites:", error);
-  }
-}
-
 //  example for sites API
 async function sitesFetchAll() {
   try {
@@ -118,9 +63,157 @@ async function sitesDeleteSite() {
   }
 }
 
+// example for Verify API
+
+async function verifyVerifyToken() {
+  try {
+    const result = await client.verify.verifyToken("InvalidToken");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+// example for Media API
+
+async function mediaQuery() {
+  try {
+    const filters = {
+      status: 'live',  
+      siteID: "STE-01JHT1EPZ83KVZM3XZCH1YA6HD",
+    };
+
+    const result = await client.media.query(filters, 1);
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function mediaFetchAll() {
+  try {
+    const result = await client.media.fetchAll();
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function mediaFetchAllArchived() {
+  try {
+    const result = await client.media.fetchAllArchived();
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function mediaFetchByID() {
+  try {
+    const result = await client.media.fetchByID("MDA-01JJ9AH5A2EH4QW728QKS92J25");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+// async function mediaCreateMedia() {
+//   try {
+//     const result = await client.media.createMedia(
+//       "Sample Media2", 
+//       "image", 
+//       "s3/sample-media-key", 
+//       ["STE-01JHT1EPZ83KVZM3XZCH1YA6HD"], 
+//       ["Suti", "Sima"], 
+//       new Date("2025-01-01T00:00:00Z"), 
+//       new Date("2025-12-31T23:59:59Z") 
+//     );
+
+//     console.log("Media created successfully:", result.data);
+//   } catch (error) {
+//     console.error("Error creating media:", error);
+//   }
+// }
+
+async function mediaUpdateMedia() {
+  try {
+    const result = await client.media.updateMedia(
+      "MDA-01JJBV4XASVQE47BN6NDEZGTPC", 
+      "Minimal Media Update", 
+      "CUS-123", 
+      ["STE-01JHT1EPZ83KVZM3XZCH1YA6HD"], 
+      [], 
+      null, 
+      null 
+    );
+
+    console.log("Media updated successfully:", result.data);
+  } catch (error) {
+    console.error("Error updating media:", error);
+  }
+}
+
+async function deleteMedia() {
+  try {
+    const result = await client.media.deleteMedia("MDA-01JJ9AH5A2EH4QW728QKS92J25");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+// example for Placements API
+
+async function placementsFetchAll() {
+  try {
+    const result = await client.placements.fetchAll(1);
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function placementsfetchByID() {
+  try {
+    const result = await client.placements.fetchByID("PLC-01JJ1FWT6M7TQC7HNFYZQ8SAPM");
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function createPlacement() {
+  try {
+    const result = await client.placements.createPlacement( "Terrency Placement", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    );
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function updatePlacement() {
+  try {
+    const result = await client.placements.updatePlacement( "PLC-01JJC1F90T0QWPD8FPVS5BHTSA", "Terrency Hill Placement", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    );
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
+async function deletePlacement() {
+  try {
+    const result = await client.placements.deletePlacement( "PLC-01JJC1JX6Z5NXNCHZ0WRF2K3GZ", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    );
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
 
 
-sitesDeleteSite();
+// deletePlacement();
 
 const PORT = 3002;
 
