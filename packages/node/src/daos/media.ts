@@ -81,6 +81,29 @@ export default class MediaDAO extends BaseDAO {
     }
 
     //craate a function to upload
+    public async requestUploadCredentials(
+      fileKey: string
+    ): Promise<APIResponse<'ok', { signedURL: string; s3Key: string }> | APIResponse<'fail', APIError>> {
+      try {
+        if (!fileKey) {
+          throw new Error('fileKey is required');
+        }
+  
+        const cleanedFileKey = fileKey.replace(/[^a-zA-Z0-9-_.]/g, '');
+  
+        const response = await this.root.http.post<{ signedURL: string; s3Key: string }>(
+          `/media/upload-credentials`,
+          {
+            fileKey: cleanedFileKey,
+          }
+        );
+    
+        return { status: 'ok', data: response.data };
+      } catch (err: unknown) {
+        const axiosError = err as AxiosError;
+        return { status: 'fail', data: axiosError.response?.data as APIError };
+      }
+    }
 
     public async createMedia(
         mediaName: string,

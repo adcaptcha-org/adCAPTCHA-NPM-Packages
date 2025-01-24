@@ -135,6 +135,10 @@ async function mediaFetchByID() {
 //   }
 // }
 
+// /media/uploadCredentials
+
+// /media/id/unarchive
+
 async function mediaUpdateMedia() {
   try {
     const result = await client.media.updateMedia(
@@ -182,9 +186,19 @@ async function placementsfetchByID() {
   }
 }
 
+// example for site/id/Placements API
+async function siteFetchAllPlacements() {
+  try {
+    const result = await client.sitePlacements.fetchAll("STE-01JHT1EPZ83KVZM3XZCH1YA6HD", 1);
+    console.log(result.data); 
+  } catch (error) {
+    console.error("Error fetching sites:", error);
+  }
+}
+
 async function createPlacement() {
   try {
-    const result = await client.placements.createPlacement( "Terrency Placement", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.sitePlacements.createPlacement( "Terrency Placement", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
@@ -194,7 +208,7 @@ async function createPlacement() {
 
 async function updatePlacement() {
   try {
-    const result = await client.placements.updatePlacement( "PLC-01JJC1F90T0QWPD8FPVS5BHTSA", "Terrency Hill Placement", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.sitePlacements.updatePlacement( "PLC-01JJ1FWT6M7TQC7HNFYZQ8SAPM", "Terrency Hill Placement", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
@@ -204,7 +218,7 @@ async function updatePlacement() {
 
 async function deletePlacement() {
   try {
-    const result = await client.placements.deletePlacement( "PLC-01JJC1JX6Z5NXNCHZ0WRF2K3GZ", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.sitePlacements.deletePlacement( "PLC-01JJ1FWT6M7TQC7HNFYZQ8SAPM", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
@@ -212,8 +226,7 @@ async function deletePlacement() {
   }
 }
 
-
-// deletePlacement();
+deletePlacement();
 
 const PORT = 3002;
 

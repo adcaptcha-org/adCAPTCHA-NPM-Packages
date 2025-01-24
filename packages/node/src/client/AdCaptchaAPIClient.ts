@@ -3,6 +3,7 @@ import VerifyDAO from '../daos/verify';
 import SitesDAO from '../daos/sites';
 import MediaDAO from '../daos/media';
 import PlacementsDAO from '../daos/placement';
+import SitePlacementsDAO from '../daos/sitePlacements';
 
 export type APIError = {
     code: string;
@@ -33,6 +34,7 @@ export default class AdCaptchaAPIClient {
   public sites: SitesDAO;
   public media: MediaDAO;
   public placements: PlacementsDAO;
+  public sitePlacements: SitePlacementsDAO;
 
   constructor(apiKey: string) {
     if (!apiKey) {
@@ -50,6 +52,7 @@ export default class AdCaptchaAPIClient {
     this.sites = new SitesDAO(this);
     this.media = new MediaDAO(this);
     this.placements = new PlacementsDAO(this);
+    this.sitePlacements = new SitePlacementsDAO(this);
   }
 }
 
