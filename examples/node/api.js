@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const fs = require('fs').promises;
 const path = require('path');
 const { AdCaptchaAPIClient } = require('@adcaptcha/node');
 
@@ -117,28 +118,41 @@ async function mediaFetchByID() {
   }
 }
 
-// async function mediaCreateMedia() {
-//   try {
-//     const result = await client.media.createMedia(
-//       "Sample Media2", 
-//       "image", 
-//       "s3/sample-media-key", 
-//       ["STE-01JHT1EPZ83KVZM3XZCH1YA6HD"], 
-//       ["Suti", "Sima"], 
-//       new Date("2025-01-01T00:00:00Z"), 
-//       new Date("2025-12-31T23:59:59Z") 
-//     );
+async function createFileFromAsset(assetPath) {
+  const fullPath = path.resolve(assetPath);
+  const fileBuffer = await fs.readFile(fullPath);
+  const parsedPath = path.parse(assetPath);
+  const fileName = parsedPath.name.charAt(0).toUpperCase() + parsedPath.name.slice(1);
+  const mimeType = 'image/webp'; 
+  return new File([fileBuffer], fileName, { type: mimeType });
+}
+async function mediaCreateMediaFromAsset() {
+  try {
+    const mediaFile = await createFileFromAsset('./assets/piedone.webp');
+    const result = await client.media.createMedia(
+      mediaFile,
+      ['STE-01JHT1EPZ83KVZM3XZCH1YA6HD'], 
+      ['Suti', 'Sima'], 
+      new Date('2025-01-01T00:00:00Z'), 
+      new Date('2025-12-31T23:59:59Z') 
+    );
+    console.log('Media created successfully:', result.data);
+  } catch (error) {
+    console.error('Error creating media:', error);
+  }
+}
 
-//     console.log("Media created successfully:", result.data);
-//   } catch (error) {
-//     console.error("Error creating media:", error);
-//   }
-// }
+async function mediaUnarchiveMedia() {
+  try {
+    const result = await client.media.unarchiveMedia(
+      "MDA-01JJ9A52251ARBEYGXGV8E8G7V" );
 
-// /media/uploadCredentials
-
-// /media/id/unarchive
-
+    console.log("Media updated successfully:", result.data);
+  } catch (error) {
+    console.error("Error updating media:", error);
+  }
+}
+mediaUnarchiveMedia();
 async function mediaUpdateMedia() {
   try {
     const result = await client.media.updateMedia(
@@ -226,7 +240,7 @@ async function deletePlacement() {
   }
 }
 
-deletePlacement();
+
 
 const PORT = 3002;
 
