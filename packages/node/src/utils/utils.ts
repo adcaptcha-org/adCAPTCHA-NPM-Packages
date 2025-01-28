@@ -1,6 +1,6 @@
 import axios from "axios";
 
-enum MediaType {
+export enum MediaType {
     Video = 'video',
     Image = 'image',
   }

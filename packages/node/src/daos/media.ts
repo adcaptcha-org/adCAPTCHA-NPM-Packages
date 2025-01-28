@@ -81,7 +81,6 @@ export default class MediaDAO extends BaseDAO {
         }
     }
 
-    //craate a function to upload
     public async requestUploadCredentials(
       fileKey: string
     ): Promise<APIResponse<'ok', { signedURL: string; s3Key: string }> | APIResponse<'fail', APIError>> {

@@ -152,7 +152,7 @@ async function mediaUnarchiveMedia() {
     console.error("Error updating media:", error);
   }
 }
-mediaUnarchiveMedia();
+
 async function mediaUpdateMedia() {
   try {
     const result = await client.media.updateMedia(
