@@ -12,11 +12,10 @@ export default class SitePlacementsDAO extends BaseDAO {
       ): Promise<
         APIResponse<'ok', PaginatedResponse<PlacementObject>> | APIResponse<'fail', APIError>
       > {
+        if (!siteID) {
+          return { status: 'fail', data: { code: '400', title: 'Bad Request', message: "siteID is required" } };
+        }
         try {
-          if (!siteID) {
-            throw new Error('siteID is required');
-          }
-      
           const response = await this.root.http.get<PaginatedResponse<PlacementObject>>(
             `/sites/${siteID}/placements`,
             {
@@ -40,6 +39,16 @@ export default class SitePlacementsDAO extends BaseDAO {
       ): Promise<
         APIResponse<'ok', PlacementObject> | APIResponse<'fail', APIError>
       > {
+        if (!name || !siteID) {
+          return {
+            status: 'fail',
+            data: {
+              code: '400',
+              title: 'Bad Request',
+              message: 'name and siteID are required',
+            },
+          };
+        }
         try {
           const response = await this.root.http.post(
             `/sites/${siteID}/placements`,
@@ -63,6 +72,16 @@ export default class SitePlacementsDAO extends BaseDAO {
       ): Promise<
         APIResponse<'ok', PlacementObject> | APIResponse<'fail', APIError>
       > {
+        if (!siteID || !placementID || !placementName) {
+          return {
+            status: 'fail',
+            data: {
+              code: '400',
+              title: 'Bad Request',
+              message: 'siteID, placementID, and placementName are required',
+            },
+          };
+        }
         try {
           const response = await this.root.http.put<PlacementObject>(
             `/sites/${siteID}/placements/${placementID}`,
@@ -80,6 +99,12 @@ export default class SitePlacementsDAO extends BaseDAO {
         id: string,
         siteID: string,
       ): Promise<APIResponse<'ok', boolean> | APIResponse<'fail', APIError>> {
+        if (!siteID || !id) {
+          return {
+            status: 'fail',
+            data: { code: '400', title: 'Bad Request', message: 'siteID and placementID are required' },
+          };
+        }
         try {
           await this.root.http.delete(`/sites/${siteID}/placements/${id}`);
       
