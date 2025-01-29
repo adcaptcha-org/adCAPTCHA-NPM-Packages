@@ -84,11 +84,10 @@ export default class MediaDAO extends BaseDAO {
     public async requestUploadCredentials(
       fileKey: string
     ): Promise<APIResponse<'ok', { signedURL: string; s3Key: string }> | APIResponse<'fail', APIError>> {
+      if (!fileKey) {
+        return { status: 'fail', data: { code: '400', title: "Bad Request" ,message: 'fileKey is required' } };
+      }
       try {
-        if (!fileKey) {
-          throw new Error('fileKey is required');
-        }
-  
         const cleanedFileKey = fileKey.replace(/[^a-zA-Z0-9-_.]/g, '');
   
         const response = await this.root.http.post<{ signedURL: string; s3Key: string }>(
@@ -112,6 +111,9 @@ export default class MediaDAO extends BaseDAO {
         scheduleStartAt: Date | null,
         scheduleEndAt: Date | null,
       ): Promise<APIResponse<'ok', MediaObject> | APIResponse<'fail', APIError>> {
+        if(!mediaFile) {
+          return { status: 'fail', data: { code: '400', title: "Bad Request" ,message: 'mediaFile is required' } };
+        };
         try {
           const uploadCredentials = await this.requestUploadCredentials(mediaFile.name);
           if (uploadCredentials.status === 'fail') {
@@ -145,6 +147,9 @@ export default class MediaDAO extends BaseDAO {
         scheduleStartAt: Date | null,
         scheduleEndAt: Date | null,
         ): Promise<APIResponse<'ok', MediaObject> | APIResponse<'fail', APIError>> {
+          if (!mediaID) {
+            return { status: 'fail', data: { code: '400', title: "Bad Request" ,message: 'mediaID is required' } };
+          };
         try {
             const response = await this.root.http.put<MediaObject>(
             `/media/${mediaID}`,
@@ -168,6 +173,9 @@ export default class MediaDAO extends BaseDAO {
     public async unarchiveMedia(
       mediaID: string
     ): Promise<APIResponse<'ok', boolean> | APIResponse<'fail', APIError>> {
+      if(!mediaID) {
+        return { status: 'fail', data: { code: '400', title: "Bad Request" ,message: 'mediaID is required' } };
+      };
       try {
         await this.root.http.post(`/media/${mediaID}/unarchive`);
         return { status: 'ok', data: true };
@@ -180,6 +188,9 @@ export default class MediaDAO extends BaseDAO {
     public async deleteMedia(
         id: string,
       ): Promise<APIResponse<'ok', boolean> | APIResponse<'fail', APIError>> {
+        if(!id) {
+          return { status: 'fail', data: { code: '400', title: "Bad Request" ,message: 'id is required' } };
+        };
         try {
           await this.root.http.delete(`/media/${id}`);
       

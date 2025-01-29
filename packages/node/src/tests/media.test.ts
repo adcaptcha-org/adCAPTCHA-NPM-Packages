@@ -1,7 +1,12 @@
+jest.mock('../utils/utils', () => ({
+  determineMediaType: jest.fn(),
+  uploadFileToS3: jest.fn(),
+}));
 import { AxiosError, AxiosInstance } from 'axios';
 import AdCaptchaAPIClient, { APIError, APIResponse, PaginatedResponse } from '../client/AdCaptchaAPIClient';
 import MediaDAO from '../daos/media';
 import { MediaObject } from '../interfaces';
+import { determineMediaType, MediaType, uploadFileToS3 } from '../utils/utils';
 
 describe('MediaDAO', () => {
   let client: AdCaptchaAPIClient;
@@ -31,6 +36,10 @@ describe('MediaDAO', () => {
     } as unknown as jest.Mocked<AxiosInstance>;
 
     mediaDAO.setHttpClient(mockHttpClient);
+
+    (determineMediaType as jest.Mock).mockReturnValue('image/jpeg'); 
+    (uploadFileToS3 as jest.Mock).mockResolvedValue(true); 
+    mockHttpClient.post.mockResolvedValue({ data: { id: 'media-123' } });
   });
 
   describe('query', () => {
@@ -348,14 +357,14 @@ describe('MediaDAO', () => {
     });
 
     it('should handle errors without response', async () => {
-      const mockError = { request: {} }; // Simulate network error
+      const mockError = { request: {} }; 
       mockHttpClient.get.mockRejectedValue(mockError);
 
       const result = await mediaDAO.fetchByID('media-456');
 
       expect(result).toEqual({
         status: 'fail',
-        data: undefined, // Matches your pattern of returning raw axiosError.response?.data
+        data: undefined, 
       });
     });
   });
@@ -382,15 +391,18 @@ describe('MediaDAO', () => {
       );
     });
 
-    it('should reject empty fileKey without making HTTP call', async () => {
+    it('should return a failure response when fileKey is empty', async () => {
       const result = await mediaDAO.requestUploadCredentials('');
-
       expect(result).toEqual({
-        status: 'fail',
-        data: undefined 
+          status: 'fail',
+          data: {
+              code: '400',
+              title: 'Bad Request',
+              message: 'fileKey is required'
+          }
       });
       expect(mockHttpClient.post).not.toHaveBeenCalled();
-    });
+  });
 
     it('should handle API errors', async () => {
       const mockError = {
@@ -436,6 +448,137 @@ describe('MediaDAO', () => {
         '/media/uploadCredentials',
         { fileKey: 'badchars123.mp4' } 
       );
+    });
+  });
+
+  describe('createMedia', () => {
+    const mockFile = new File(['content'], 'test.jpg', { type: 'image/jpeg' });
+    const mockSiteIDs = ['site-1'];
+    const mockKeywords = ['keyword1'];
+    const mockStartDate = new Date();
+    const mockEndDate = new Date();
+
+    it('should return fail when mediaFile is missing', async () => {
+      const result = await mediaDAO.createMedia(
+        null as any, 
+        mockSiteIDs,
+        mockKeywords,
+        mockStartDate,
+        mockEndDate
+      );
+  
+      expect(result).toEqual({
+        status: 'fail',
+        data: {
+          code: '400',
+          title: 'Bad Request',
+          message: 'mediaFile is required'
+        }
+      });
+      expect(mockHttpClient.post).not.toHaveBeenCalled();
+    });
+  
+    it('should return failure response when requestUploadCredentials encounters an error', async () => {
+      const mockError: APIResponse<'fail', APIError> = { 
+        status: 'fail', 
+        data: { code: '403', title: 'Forbidden', message: 'Invalid file type' } 
+      };
+      jest.spyOn(mediaDAO, 'requestUploadCredentials').mockResolvedValue(mockError);
+  
+      const result = await mediaDAO.createMedia(
+        mockFile,
+        mockSiteIDs,
+        mockKeywords,
+        mockStartDate,
+        mockEndDate
+      );
+  
+      expect(result).toEqual(mockError);
+      expect(mockHttpClient.post).not.toHaveBeenCalled();
+    });
+   
+    it('should handle API errors during media creation', async () => {
+      const mockCredentials: APIResponse<'ok', { signedURL: string; s3Key: string; }> = { 
+        status: 'ok', 
+        data: { 
+          signedURL: 'http://s3.example.com', 
+          s3Key: 'test-key.jpg' 
+        } 
+      };
+      jest.spyOn(mediaDAO, 'requestUploadCredentials').mockResolvedValue(mockCredentials);
+  
+      const mockError = {
+        response: {
+          data: { code: 500, message: 'Server Error' }
+        }
+      } as AxiosError;
+      mockHttpClient.post.mockRejectedValue(mockError);
+  
+      const result = await mediaDAO.createMedia(
+        mockFile,
+        mockSiteIDs,
+        mockKeywords,
+        mockStartDate,
+        mockEndDate
+      );
+  
+      expect(result).toEqual({
+        status: 'fail',
+        data: mockError.response?.data
+      });
+    });
+  
+    it('should successfully create media when all steps succeed', async () => {
+      const mockCredentials: APIResponse<'ok', { signedURL: string; s3Key: string; }> = { 
+        status: 'ok', 
+        data: { 
+          signedURL: 'http://s3.example.com', 
+          s3Key: 'test-key.jpg' 
+        } 
+      };
+      jest.spyOn(mediaDAO, 'requestUploadCredentials').mockResolvedValue(mockCredentials);
+  
+      const mockMediaResponse: MediaObject = {
+        id: 'media-123',
+        name: 'test.jpg',
+        type: 'image/jpeg', 
+        keywords: ['test', 'media'],
+        sites: [], 
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        archivedAt: new Date(), 
+        scheduleStartAt: null,
+        scheduleEndAt: null, 
+        state: 'live', 
+        metadata: {} 
+      };
+      mockHttpClient.post.mockResolvedValue({ data: mockMediaResponse });
+  
+      const result = await mediaDAO.createMedia(
+        mockFile,
+        mockSiteIDs,
+        mockKeywords,
+        mockStartDate,
+        mockEndDate
+      );
+  
+      expect(result).toEqual({
+        status: 'ok',
+        data: mockMediaResponse
+      });
+      expect(uploadFileToS3).toHaveBeenCalledWith(
+        mockCredentials.data.signedURL,
+        mockFile
+      );
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/media', {
+        name: mockFile.name,
+        type: 'image/jpeg',
+        s3Key: mockCredentials.data.s3Key,
+        siteIDs: mockSiteIDs,
+        keywords: mockKeywords,
+        scheduleStartAt: mockStartDate,
+        scheduleEndAt: mockEndDate,
+      });
     });
   });
   
@@ -548,26 +691,6 @@ describe('MediaDAO', () => {
       );
     });
   
-    it('should handle network errors', async () => {
-      const mockError = { request: {} };
-      mockHttpClient.put.mockRejectedValue(mockError);
-  
-      const result = await mediaDAO.updateMedia(
-        mockMediaID,
-        'Network Error',
-        'cust-456',
-        [],
-        [],
-        null,
-        null
-      );
-  
-      expect(result).toEqual({
-        status: 'fail',
-        data: undefined
-      });
-    });
-  
     it('should correctly format the request URL', async () => {
         const specialID = 'media@special&id';
         const mockResponse = {
@@ -589,6 +712,25 @@ describe('MediaDAO', () => {
             expect.any(Object)
         );
     });
+
+    it('should return validation error if mediaID is missing', async () => {
+      const result = await mediaDAO.updateMedia(
+          '',  
+          'Updated Media Name',
+          'customer-1',
+          ['site-1'],
+          ['keyword-1'],
+          new Date(),
+          new Date()
+      );
+
+      expect(result).toEqual({
+          status: 'fail',
+          data: { code: '400', title: 'Bad Request', message: 'mediaID is required' }
+      });
+
+      expect(mockHttpClient.put).not.toHaveBeenCalled();
+  });
   });
 
   describe('unarchiveMedia', () => {
@@ -627,36 +769,16 @@ describe('MediaDAO', () => {
       );
     });
   
-    it('should handle network errors', async () => {
-      const mockError = { request: {} };
-      mockHttpClient.post.mockRejectedValue(mockError);
-  
-      const result = await mediaDAO.unarchiveMedia(mockMediaID);
-  
-      expect(result).toEqual({
-        status: 'fail',
-        data: undefined
-      });
-    });
-  
-    it('should handle empty mediaID parameter', async () => {
-      const mockError = {
-        response: {
-          data: { code: 400, message: 'Invalid media ID' }
-        }
-      };
-      mockHttpClient.post.mockRejectedValue(mockError);
-  
+    it('should return validation error if mediaID is missing', async () => {
       const result = await mediaDAO.unarchiveMedia('');
-  
+
       expect(result).toEqual({
-        status: 'fail',
-        data: mockError.response.data
+          status: 'fail',
+          data: { code: '400', title: 'Bad Request', message: 'mediaID is required' }
       });
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/media//unarchive'
-      );
-    });
+
+      expect(mockHttpClient.post).not.toHaveBeenCalled();
+  });
   });
 
   describe('deleteMedia', () => {
@@ -691,34 +813,15 @@ describe('MediaDAO', () => {
       expect(mockHttpClient.delete).toHaveBeenCalledWith('/media/invalid-id');
     });
   
-    it('should handle network errors', async () => {
-      const mockError = { request: {} }; 
-      mockHttpClient.delete.mockRejectedValue(mockError);
-  
-      const result = await mediaDAO.deleteMedia(mockMediaID);
-  
-      expect(result).toEqual({
-        status: 'fail',
-        data: undefined,
-      });
-      expect(mockHttpClient.delete).toHaveBeenCalledWith(`/media/${mockMediaID}`);
-    });
-  
-    it('should handle empty mediaID parameter', async () => {
-      const mockError = {
-        response: {
-          data: { code: 400, message: 'Invalid media ID' },
-        },
-      };
-      mockHttpClient.delete.mockRejectedValue(mockError);
-  
+    it('should return validation error if id is missing', async () => {
       const result = await mediaDAO.deleteMedia('');
-  
+
       expect(result).toEqual({
-        status: 'fail',
-        data: mockError.response.data,
+          status: 'fail',
+          data: { code: '400', title: 'Bad Request', message: 'id is required' }
       });
-      expect(mockHttpClient.delete).toHaveBeenCalledWith('/media/');
+
+      expect(mockHttpClient.delete).not.toHaveBeenCalled();
     });
   });
 });

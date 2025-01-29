@@ -22,6 +22,12 @@ export default class SitesDAO extends BaseDAO {
     | APIResponse<'ok', SiteObject>
     | APIResponse<'fail', APIError>
   > {
+    if (!id) {
+      return {
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      };
+    }
     try {
       const response = await this.root.http.get<SiteObject>(`/sites/${id}`);
       return { status: 'ok', data: response.data };
@@ -38,6 +44,12 @@ export default class SitesDAO extends BaseDAO {
     | APIResponse<'ok', SiteStatsObject[]>
     | APIResponse<'fail', APIError>
   > {
+    if (!id) {
+      return {
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      };
+    }
     try {
       const response = await this.root.http.get<SiteStatsObject[]>(
         `/sites/${id}/stats/${dateRange}`
@@ -56,6 +68,12 @@ export default class SitesDAO extends BaseDAO {
     | APIResponse<'ok', SiteObject>
     | APIResponse<'fail', APIError>
   > {
+    if (!siteName || !siteUrl) {
+      return {
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'siteName and siteUrl are required' },
+      };
+    }
     try {
       const response = await this.root.http.post<SiteObject>('/sites', {
         name: siteName,
@@ -77,6 +95,12 @@ export default class SitesDAO extends BaseDAO {
     | APIResponse<'ok', SiteObject>
     | APIResponse<'fail', APIError>
   > {
+    if(!siteID || !siteName || !siteUrl) {
+      return {
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'siteID, siteName and siteUrl are required' },
+      };
+    };
     try {
       const response = await this.root.http.put<SiteObject>(
         `/sites/${siteID}`,
@@ -96,6 +120,12 @@ export default class SitesDAO extends BaseDAO {
     | APIResponse<'ok', boolean>
     | APIResponse<'fail', APIError>
   > {
+    if(!id) { 
+      return {
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      };
+    };
     try {
       await this.root.http.delete(`/sites/${id}`);
   

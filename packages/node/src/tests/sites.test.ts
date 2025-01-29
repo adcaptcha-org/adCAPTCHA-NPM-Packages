@@ -80,6 +80,16 @@ describe('SitesDAO', () => {
 
       expect(result).toEqual({ status: 'fail', data: mockError.response.data });
     });
+
+    it('returns a validation error if id is missing', async () => {
+      const result = await siteDAO.fetchByID('');
+      expect(result).toEqual({
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      });
+      
+      expect(mockHttpClient.get).not.toHaveBeenCalled();
+    });
   });
 
   describe('fetchStatsForSite', () => {
@@ -106,6 +116,16 @@ describe('SitesDAO', () => {
 
       expect(result).toEqual({ status: 'fail', data: mockError.response.data });
       expect(mockHttpClient.get).toHaveBeenCalledWith('/sites/site-1/stats/7d');
+    });
+
+    it('returns a validation error if id is missing', async () => {
+      const result = await siteDAO.fetchStatsForSite('', '7d');
+      expect(result).toEqual({
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      });
+      
+      expect(mockHttpClient.get).not.toHaveBeenCalled();
     });
   });
 
@@ -147,6 +167,22 @@ describe('SitesDAO', () => {
       expect(mockHttpClient.post).toHaveBeenCalledWith('/sites', {
         name: 'Bad Site',
         url: 'invalid-url'
+      });
+    });
+
+    it('returns a validation error if siteName or siteUrl is missing', async () => {
+      const testCases = [
+        { siteName: '', siteUrl: 'https://example.com' },
+        { siteName: 'Test Site', siteUrl: '' },
+        { siteName: '', siteUrl: '' },
+      ];
+      testCases.forEach(async ({ siteName, siteUrl }) => {
+        const result = await siteDAO.createSite(siteName, siteUrl);
+        expect(result).toEqual({
+          status: 'fail',
+          data: { code: '400', title: 'Bad Request', message: 'siteName and siteUrl are required' },
+        });
+        expect(mockHttpClient.post).not.toHaveBeenCalled();
       });
     });
   });
@@ -191,6 +227,23 @@ describe('SitesDAO', () => {
         { name: 'Bad Update', url: 'invalid-url' }
       );
     });
+
+    it('returns a validation error if siteID, siteName, or siteUrl is missing', async () => {
+      const testCases = [
+        { siteID: '', siteName: 'Updated Site', siteUrl: 'https://updated.com' },
+        { siteID: 'site-1', siteName: '', siteUrl: 'https://updated.com' },
+        { siteID: 'site-1', siteName: 'Updated Site', siteUrl: '' },
+        { siteID: '', siteName: '', siteUrl: '' },
+      ];
+      testCases.forEach(async ({ siteID, siteName, siteUrl }) => {
+        const result = await siteDAO.updateSite(siteID, siteName, siteUrl);
+        expect(result).toEqual({
+          status: 'fail',
+          data: { code: '400', title: 'Bad Request', message: 'siteID, siteName and siteUrl are required' },
+        });
+        expect(mockHttpClient.put).not.toHaveBeenCalled();
+      });
+    });
   });
 
   describe('deleteSite', () => {
@@ -221,6 +274,15 @@ describe('SitesDAO', () => {
         data: mockError.response.data
       });
       expect(mockHttpClient.delete).toHaveBeenCalledWith('/sites/invalid-id');
+    });
+
+    it('returns a validation error if id is missing', async () => {
+      const result = await siteDAO.deleteSite('');
+      expect(result).toEqual({
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      });
+      expect(mockHttpClient.delete).not.toHaveBeenCalled();
     });
   });
 });

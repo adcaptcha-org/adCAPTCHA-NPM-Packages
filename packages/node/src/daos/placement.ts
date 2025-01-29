@@ -11,6 +11,12 @@ export default class PlacementsDAO extends BaseDAO {
         | APIResponse<'ok', PaginatedResponse<PlacementObject>>
         | APIResponse<'fail', APIError>
         > {
+          if (!page) {
+            return {
+              status: 'fail',
+              data: { code: '400', title: 'Bad Request', message: 'page is required' },
+            };
+          }
         try {
             const response = await this.root.http.get<PaginatedResponse<PlacementObject>>(
             `/placements?page=${page}`
@@ -26,6 +32,12 @@ export default class PlacementsDAO extends BaseDAO {
     public async fetchByID(
         id: string,
       ): Promise<APIResponse<'ok', PlacementObject> | APIResponse<'fail', APIError>> {
+        if (!id) {
+          return {
+            status: 'fail',
+            data: { code: '400', title: 'Bad Request', message: 'id is required' },
+          };
+        }
         try {
           const response = await this.root.http.get<PlacementObject>(`/placements/${id}`);
       

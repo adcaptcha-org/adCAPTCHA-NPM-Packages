@@ -77,6 +77,15 @@ describe('PlacementDAO', () => {
       await placementDAO.fetchAll(5);
       expect(mockHttpClient.get).toHaveBeenCalledWith('/placements?page=5');
     });
+
+    it('should handle invalid page number', async () => {
+      const result = await placementDAO.fetchAll(0); 
+      expect(result).toEqual({
+        status: 'fail',
+        data: { code: "400", title: "Bad Request", message: "page is required" }
+      });
+      expect(mockHttpClient.get).not.toHaveBeenCalled();
+    });
   });
 
   describe('fetchByID', () => {
@@ -121,6 +130,17 @@ describe('PlacementDAO', () => {
         status: 'fail',
         data: { code: "404", title: 'Not Found', message: 'Placement not found' } 
       });
+    });
+
+    it('should return a validation error if id is empty', async () => {
+      const result = await placementDAO.fetchByID('');
+      
+      expect(result).toEqual({
+        status: 'fail',
+        data: { code: '400', title: 'Bad Request', message: 'id is required' },
+      });
+      
+      expect(mockHttpClient.get).not.toHaveBeenCalled(); 
     });
   });
 });
