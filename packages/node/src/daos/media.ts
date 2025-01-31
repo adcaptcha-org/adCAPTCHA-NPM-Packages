@@ -7,7 +7,7 @@ import { determineMediaType, uploadFileToS3 } from '../utils/utils';
 export default class MediaDAO extends BaseDAO {
 
     public async query(
-        filters: { status: MediaSate; siteID?: string },
+        filters: { status: MediaSate; siteIDs?: string[] },
         page: number,
         pageSize?: number
       ): Promise<
