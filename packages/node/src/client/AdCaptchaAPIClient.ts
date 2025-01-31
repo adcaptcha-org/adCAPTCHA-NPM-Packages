@@ -42,7 +42,7 @@ export default class AdCaptchaAPIClient {
       }
 
     this.http = axios.create({
-      baseURL: 'http://localhost:3000/v1',  
+      baseURL: 'https://api.adcaptcha.com/v1',  
       withCredentials: true,
     });
 

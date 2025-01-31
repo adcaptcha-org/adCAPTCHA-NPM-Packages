@@ -18,7 +18,6 @@ async function sitesFetchAll() {
   }
 }
 
-
 async function sitesFetchByID() {
   try {
     const result = await client.sites.fetchByID("STE-01JHT1EPZ83KVZM3XZCH1YA6HD");
@@ -27,7 +26,6 @@ async function sitesFetchByID() {
     console.error("Error fetching sites:", error);
   }
 }
-
 
 async function sitesFetchStatsForSite() {
   try {
