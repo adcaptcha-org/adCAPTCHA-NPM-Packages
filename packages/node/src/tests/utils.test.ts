@@ -33,6 +33,16 @@ describe('utils functions', () => {
   describe('uploadFileToS3', () => {
     const mockFile = new File(['file'], 'test.jpg', { type: 'image/jpeg' });
 
+    let consoleErrorSpy: jest.SpyInstance;
+    // Suppress console.error output
+    beforeEach(() => {
+      consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn()); 
+    });
+  
+    afterEach(() => {
+      consoleErrorSpy.mockRestore(); 
+    });
+
     it('should return true when the file is successfully uploaded', async () => {
       (axios.put as jest.Mock).mockResolvedValue({ status: 200 });
 

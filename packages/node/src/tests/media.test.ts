@@ -3,10 +3,10 @@ jest.mock('../utils/utils', () => ({
   uploadFileToS3: jest.fn(),
 }));
 import { AxiosError, AxiosInstance } from 'axios';
-import AdCaptchaAPIClient, { APIError, APIResponse, PaginatedResponse } from '../client/AdCaptchaAPIClient';
+import AdCaptchaAPIClient, { APIError, APIResponse } from '../client/AdCaptchaAPIClient';
 import MediaDAO from '../daos/media';
 import { MediaObject } from '../interfaces';
-import { determineMediaType, MediaType, uploadFileToS3 } from '../utils/utils';
+import { determineMediaType, uploadFileToS3 } from '../utils/utils';
 
 describe('MediaDAO', () => {
   let client: AdCaptchaAPIClient;
@@ -56,7 +56,7 @@ describe('MediaDAO', () => {
       mockHttpClient.get.mockResolvedValue(mockResponse);
 
       const result = await mediaDAO.query(
-        { status: 'live', siteID: 'site-1' },
+        { status: 'live', siteIDs: ['site-1'] },
         1,
         10
       );
@@ -70,7 +70,7 @@ describe('MediaDAO', () => {
         {
           params: {
             status: 'live',
-            siteID: 'site-1',
+            siteIDs: ['site-1'],
           },
         }
       );

@@ -15,7 +15,7 @@ jest.mock('axios');
 
 const mockAxiosInstance = {
     defaults: {
-      baseURL: 'http://localhost:3000/v1',  
+      baseURL: 'https://api.adcaptcha.com/v1',  
       headers: {
         common: {
           'Authorization': '',  
@@ -40,7 +40,7 @@ describe('AdCaptchaAPIClient', () => {
     axios.create = jest.fn(() => mockAxiosInstance);
     const client = new AdCaptchaAPIClient(mockApiKey);
 
-    expect(client.http.defaults.baseURL).toBe('http://localhost:3000/v1');
+    expect(client.http.defaults.baseURL).toBe('https://api.adcaptcha.com/v1');
     expect(client.http.defaults.headers.common['Authorization']).toBe(`Bearer ${mockApiKey}`);
     expect(client.verify).toBeInstanceOf(VerifyDAO);
     expect(client.sites).toBeInstanceOf(SitesDAO);
@@ -55,7 +55,7 @@ describe('AdCaptchaAPIClient', () => {
     new AdCaptchaAPIClient(mockApiKey);
 
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: 'http://localhost:3000/v1',
+      baseURL: 'https://api.adcaptcha.com/v1',
       withCredentials: true,
     });
   });
