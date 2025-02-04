@@ -4,13 +4,11 @@ import VerifyDAO from '../daos/verify';
 import SitesDAO from '../daos/sites';
 import MediaDAO from '../daos/media';
 import PlacementsDAO from '../daos/placement';
-import SitePlacementsDAO from '../daos/sitePlacements';
 
 jest.mock('../daos/verify');
 jest.mock('../daos/sites');
 jest.mock('../daos/media');
 jest.mock('../daos/placement');
-jest.mock('../daos/sitePlacements');
 jest.mock('axios');
 
 const mockAxiosInstance = {
@@ -46,7 +44,6 @@ describe('AdCaptchaAPIClient', () => {
     expect(client.sites).toBeInstanceOf(SitesDAO);
     expect(client.media).toBeInstanceOf(MediaDAO);
     expect(client.placements).toBeInstanceOf(PlacementsDAO);
-    expect(client.sitePlacements).toBeInstanceOf(SitePlacementsDAO);
   });
 
   it('should call axios.create with the correct configuration', () => {
