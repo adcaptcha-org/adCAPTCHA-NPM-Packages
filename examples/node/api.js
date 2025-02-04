@@ -199,10 +199,9 @@ async function placementsfetchByID() {
   }
 }
 
-// example for site/id/Placements API
 async function siteFetchAllPlacements() {
   try {
-    const result = await client.sitePlacements.fetchAll("STE-01JJ9GBGDEJVG640AYCABA3YH4");
+    const result = await client.placements.fetchAllForSite("STE-01JJ9GBGDEJVG640AYCABA3YH4");
     console.log(result.data); 
   } catch (error) {
     console.error("Error fetching sites:", error);
@@ -211,7 +210,7 @@ async function siteFetchAllPlacements() {
 
 async function createPlacement() {
   try {
-    const result = await client.sitePlacements.createPlacement( "Terrency nyavaja", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.placements.createPlacement( "Terrency nyavaja", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
@@ -221,7 +220,7 @@ async function createPlacement() {
 
 async function updatePlacement() {
   try {
-    const result = await client.sitePlacements.updatePlacement( "PLC-01JJC1F90T0QWPD8FPVS5BHTSA", "Terrency Hill Placement Update", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.placements.updatePlacement( "PLC-01JJC1F90T0QWPD8FPVS5BHTSA", "Terrency Hill Placement Update", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
@@ -231,7 +230,7 @@ async function updatePlacement() {
 
 async function deletePlacement() {
   try {
-    const result = await client.sitePlacements.deletePlacement( "PLC-01JJCEYQPNZNSD1342A0J5GZWY", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.placements.deletePlacement( "PLC-01JJCEYQPNZNSD1342A0J5GZWY", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {

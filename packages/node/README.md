@@ -670,18 +670,13 @@ const result = await client.placements.fetchByID("PLC-YOUR_PLACEMENT_ID");
 }
 ```
   </details>
-</details>
-
-
-<details>
-  <summary>&nbsp;<strong>Site Placements</strong></summary>
-
+  
   <details>
     <summary>&nbsp;&nbsp;&nbsp;• Fetch All Placements for Site</summary>
     
 ### Request
 ```typescript
-const result = await client.sitePlacements.fetchAll("STE-YOUR_SITE_ID", 1, 4);
+const result = await client.placements.fetchAllForSite("STE-YOUR_SITE_ID", 1, 4);
 ```
 
 ### Definitions
@@ -715,7 +710,7 @@ const result = await client.sitePlacements.fetchAll("STE-YOUR_SITE_ID", 1, 4);
 
 ### Request
 ```typescript
-const result = await client.sitePlacements.createPlacement("Your Placement Name", "STE-YOUR_SITE_ID");
+const result = await client.placements.createPlacement("Your Placement Name", "STE-YOUR_SITE_ID");
 ```
 
 ### Definitions
@@ -744,7 +739,7 @@ const result = await client.sitePlacements.createPlacement("Your Placement Name"
 
 ### Request
 ```typescript
-const result = await client.sitePlacements.updatePlacement("PLC-YOUR_PLACEMENT_ID", "Updated Placement Name", "STE-YOUR_SITE_ID");
+const result = await client.placements.updatePlacement("PLC-YOUR_PLACEMENT_ID", "Updated Placement Name", "STE-YOUR_SITE_ID");
 ```
 
 ### Definitions
@@ -773,7 +768,7 @@ const result = await client.sitePlacements.updatePlacement("PLC-YOUR_PLACEMENT_I
 
 ### Request
 ```typescript
-const result = await client.sitePlacements.deletePlacement("PLC-YOUR_PLACEMENT_ID", "STE-YOUR_SITE_ID");
+const result = await client.placements.deletePlacement("PLC-YOUR_PLACEMENT_ID", "STE-YOUR_SITE_ID");
 ```
 
 ### Definitions
