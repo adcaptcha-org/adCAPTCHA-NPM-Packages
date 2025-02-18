@@ -38,7 +38,7 @@ async function sitesFetchStatsForSite() {
 
 async function sitesCreateSite() {
   try {
-    const result = await client.sites.createSite("Bunyo karacsonyig", "https://piedone.com");
+    const result = await client.sites.createSite("Test site", "https://adcaptcha.com");
     console.log(result.data); 
   } catch (error) {
     console.error("Error fetching sites:", error);
@@ -47,7 +47,7 @@ async function sitesCreateSite() {
 
 async function sitesUpdateSite() {
   try {
-    const result = await client.sites.updateSite("STE-01JHT1EPZ83KVZM3XZCH1YA6HD", "Terency Hill updated", "https://piedone.com");
+    const result = await client.sites.updateSite("STE-01JHT1EPZ83KVZM3XZCH1YA6HD", "Test site update", "https://adcaptcha.com");
     console.log(result.data); 
   } catch (error) {
     console.error("Error fetching sites:", error);
@@ -127,11 +127,11 @@ async function createFileFromAsset(assetPath) {
 }
 async function mediaCreateMediaFromAsset() {
   try {
-    const mediaFile = await createFileFromAsset('./assets/piedone.webp');
+    const mediaFile = await createFileFromAsset('./assets/imageTest.webp');
     const result = await client.media.createMedia(
       mediaFile,
       ['STE-01JJ9GBGDEJVG640AYCABA3YH4'], 
-      ['Suti', 'Sima'], 
+      ['Truck', 'Driver'], 
       new Date('2025-01-01T00:00:00Z'), 
       new Date('2025-12-31T23:59:59Z') 
     );
@@ -210,7 +210,7 @@ async function siteFetchAllPlacements() {
 
 async function createPlacement() {
   try {
-    const result = await client.placements.createPlacement( "Terrency nyavaja", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.placements.createPlacement( "Your Placement Name", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
@@ -220,7 +220,7 @@ async function createPlacement() {
 
 async function updatePlacement() {
   try {
-    const result = await client.placements.updatePlacement( "PLC-01JJC1F90T0QWPD8FPVS5BHTSA", "Terrency Hill Placement Update", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
+    const result = await client.placements.updatePlacement( "PLC-01JJC1F90T0QWPD8FPVS5BHTSA", "Your Placement Name Update", "STE-01JJ9GBGDEJVG640AYCABA3YH4"
     );
     console.log(result.data); 
   } catch (error) {
