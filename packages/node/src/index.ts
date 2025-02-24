@@ -1,1 +1,1 @@
-export { verify } from './verify';
+export { default as AdCaptchaAPIClient } from './client/AdCaptchaAPIClient';

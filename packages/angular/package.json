@@ -1,6 +1,6 @@
 {
-  "name": "@adcaptcha/angular",
-  "version": "1.0.0",
+  "name": "adcaptcha-angular",
+  "version": "1.0.2",
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
