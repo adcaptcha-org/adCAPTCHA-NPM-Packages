@@ -11,11 +11,27 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-      - name: Install dependencies and build
-        run: npm ci && npm run build
-      - name: Publish adCAPTCHA to NPM
-        run: npm publish
+      - name: Install dependencies and build @adcaptcha/react
+        run: |
+          cd packages/react
+          npm ci
+          npm run build
+      - name: Publish @adcaptcha/react to NPM
+        run: |
+          cd packages/react
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Install dependencies and build @adcaptcha/node
+        run: |
+          cd packages/node
+          npm ci
+          npm run build
+      - name: Publish @adcaptcha/node to NPM
+        run: |
+          cd packages/node
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
