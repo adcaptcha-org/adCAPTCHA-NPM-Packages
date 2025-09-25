@@ -1,15 +1,19 @@
+export interface AdCAPTCHAInitConfig {
+  [key: string]: unknown;
+}
+
 declare global {
   interface Window {
     adcap: {
       setupTriggers: (config: { onComplete: () => void }) => void;
       setKeywords: (keywords: string[]) => void;
-      init: () => void;
+      init: (config?: AdCAPTCHAInitConfig) => void;
       successToken: string;
     };
   }
 }
 
-export function loadScript(): Promise<void> {
+export function loadScript(config?: AdCAPTCHAInitConfig): Promise<void> {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = "https://widget.adcaptcha.com/index.js";
@@ -17,7 +21,7 @@ export function loadScript(): Promise<void> {
     script.type = 'module';
     script.async = true;
     script.onload = function () {
-      window.adcap.init();
+      window.adcap.init(config);
       resolve();
     };
     script.onerror = reject;

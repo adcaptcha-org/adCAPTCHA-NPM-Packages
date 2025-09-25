@@ -1,22 +1,25 @@
 import React, { useEffect, useRef } from 'react';
-import { loadScript } from './util';
+import { AdCAPTCHAInitConfig, loadScript } from './util';
 
 interface AdCAPTCHAProps {
   placementID: string;
   onComplete?: () => void;
+  config?: AdCAPTCHAInitConfig;
 }
 
 const AdCAPTCHA = (props: AdCAPTCHAProps) => {
   const onCompleteRef = useRef<(() => void) | undefined>();
   onCompleteRef.current = props.onComplete;
+  const initConfigRef = useRef<AdCAPTCHAInitConfig | undefined>();
+  initConfigRef.current = props.config;
 
   useEffect(() => {
     async function setupTriggers() {
-      loadScript().then(() => {
+      loadScript(initConfigRef.current).then(() => {
         if (!onCompleteRef.current) return;
 
         window.adcap.setupTriggers({
-            onComplete: onCompleteRef.current,
+          onComplete: onCompleteRef.current,
         });
       });
     }

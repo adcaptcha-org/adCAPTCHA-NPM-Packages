@@ -18,9 +18,12 @@ A Placement ID is used to specify what media will be shown in a CAPTCHA. To crea
 #### onComplete
 This is a callback that will execute after successfully completing a CAPTCHA. In this example we are using it to get the success token, but can also be used perform different actions e.g. to remove the disabled attribute from submission buttons and change styling rules.
 
+#### config
+An optional configuration object that is passed to the adCAPTCHA widget when it is initialised. This allows you to customise the widget behaviour as documented in the [adCAPTCHA widget configuration guide](https://docs.adcaptcha.com). The TypeScript type `AdCAPTCHAInitConfig` is exported if you want stronger typing for this configuration object.
+
 #### setKeywords
-If you would like to target specific media for a captcha using keywords, you can do this 
-by calling "window.adcap.setKeywords()" with an array of strings. The adCAPTCHA widget 
+If you would like to target specific media for a captcha using keywords, you can do this
+by calling "window.adcap.setKeywords()" with an array of strings. The adCAPTCHA widget
 will then prioritise media that match the keywords you have provided.
 
 Make sure to also add the keywords to the specified media in the [AdCAPTCHA dashboard](https://app.adcaptcha.com/login). 
@@ -45,6 +48,7 @@ function App() {
       <AdCAPTCHA
         placementID={'PLC-01HN2YE5YQACAFM1YEWBDR2419'}
         onComplete={handleComplete}
+        config={{ theme: 'dark' }}
       />
     </div>
   );
